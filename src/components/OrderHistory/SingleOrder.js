@@ -2,6 +2,7 @@ import React from "react";
 import SingleItemOrderComponent from "./SingleItemOrderComponent";
 
 const SingleOrder = ({ order }) => {
+  console.log(order);
   return (
     <div>
       <span>---</span>

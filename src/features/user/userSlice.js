@@ -124,7 +124,6 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrderHistory.rejected, (state, { payload }) => {
         state.isOrderHistoryLoading = false;
-
         toast.error(payload.message);
       }); /* 
       .addCase(registerUser.pending, (state) => {

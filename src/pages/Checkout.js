@@ -213,6 +213,15 @@ const Checkout = () => {
                       id: Date.now().toString(),
                       userId: user.userId,
                       items: cart,
+                      address:
+                        values.address +
+                        "," +
+                        values.city +
+                        "," +
+                        values.state +
+                        "," +
+                        values.zip,
+                      total: total,
                     })
                   );
                   cart.map((cartItem) => {

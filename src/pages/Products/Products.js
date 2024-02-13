@@ -37,11 +37,7 @@ const Products = () => {
       <section className="slick-container">
         <div className="products">
           {products.slice((page - 1) * 5, page * 5).map((product, i) => {
-            if (window.innerWidth >= 1050) {
-              return <ProductPlaceholder key={i} product={product} />;
-            } else {
-              return <ProductPlaceholderHorizontal key={i} product={product} />;
-            }
+            return <ProductPlaceholder key={i} product={product} />;
           })}
         </div>
         <div className="page-pagination">

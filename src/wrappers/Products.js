@@ -57,6 +57,13 @@ const Wrapper = styled.section`
     align-items: center;
     justify-content: center;
   }
+  @media (min-width: 650px) {
+    .products {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
   @media (min-width: 1050px) {
     .products {
       display: grid;

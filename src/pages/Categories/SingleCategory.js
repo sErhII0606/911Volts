@@ -18,6 +18,9 @@ const SingleCategory = () => {
     dispatch(searchByCategory({ category, name: "" }));
   }, [category]);
   const [width, height] = useDeviceSize();
+  if (isLoading) {
+    return <Spinner />;
+  }
   if (!products[0]) {
     return <h1>Curently no Items</h1>;
   }
@@ -25,11 +28,7 @@ const SingleCategory = () => {
     <Wrapper>
       <div className="products">
         {products.map((product, i) => {
-          if (window.innerWidth >= 1050) {
-            return <ProductPlaceholder key={i} product={product} />;
-          } else {
-            return <ProductPlaceholderHorizontal key={i} product={product} />;
-          }
+          return <ProductPlaceholder key={i} product={product} />;
         })}
       </div>
     </Wrapper>

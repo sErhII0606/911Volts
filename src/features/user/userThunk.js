@@ -50,6 +50,6 @@ export const getUserOrderHistoryThunk = async (userId, thunkAPI) => {
     });
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
+    return thunkAPI.rejectWithValue(error);
   }
 };
