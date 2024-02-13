@@ -1,0 +1,28 @@
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loading {
+  width: 6rem;
+  height: 6rem;
+  border: 5px solid var(--grey-400);
+  border-radius: 50%;
+  border-top-color: var(--primary-500);
+  animation: spinner 0.6s linear infinite;
+}
+.modal-img {
+  width: 60rem;
+  height: auto;
+  border: 1.5mm ridge rgb(203, 227, 236);
+  border-radius: 2mm;
+}
+.loading {
+  margin: 0 auto;
+}
+body {
+  background-color: aliceblue;
+}
+main {
+  transition: margin-left 0.5s; /* If you want a transition effect */
+}
