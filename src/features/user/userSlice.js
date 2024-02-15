@@ -88,7 +88,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.isLoading = false;
-        toast.error(payload.message);
+        toast.error(payload);
       })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
@@ -100,7 +100,7 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, { payload }) => {
         state.isLoading = false;
 
-        toast.error(payload.message);
+        toast.error(payload);
       })
       .addCase(createOrder.pending, (state) => {
         state.isOrderLoading = true;
@@ -113,7 +113,7 @@ const userSlice = createSlice({
       .addCase(createOrder.rejected, (state, { payload }) => {
         state.isOrderLoading = false;
 
-        toast.error(payload.message);
+        toast.error(payload);
       })
       .addCase(getUserOrderHistory.pending, (state) => {
         state.isOrderHistoryLoading = true;
@@ -124,7 +124,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrderHistory.rejected, (state, { payload }) => {
         state.isOrderHistoryLoading = false;
-        toast.error(payload.message);
+        toast.error(payload);
       }); /* 
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;

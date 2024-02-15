@@ -4,7 +4,7 @@ import { getUserOrderHistory } from "../../features/user/userSlice";
 import { Spinner } from "react-bootstrap";
 import SingleItemOrderComponent from "../../components/OrderHistory/SingleItemOrderComponent";
 import SingleOrder from "../../components/OrderHistory/SingleOrder";
-
+import Wrapper from "../../wrappers/OrderHistory";
 const OrderHistory = () => {
   const { user, isOrderHistoryLoading } = useSelector((store) => store.user);
   const { userOrderHistory } = user;
@@ -16,14 +16,20 @@ const OrderHistory = () => {
     return <Spinner />;
   }
   if (!userOrderHistory[0]) {
-    return <h2>No Orders Yet!</h2>;
+    return (
+      <Wrapper>
+        <h2>No Orders Yet!</h2>
+      </Wrapper>
+    );
   }
   return (
-    <div>
-      {user.userOrderHistory.map((order, i) => {
-        return <SingleOrder order={order} key={i} />;
-      })}
-    </div>
+    <Wrapper>
+      <div>
+        {user.userOrderHistory.map((order, i) => {
+          return <SingleOrder order={order} key={i} />;
+        })}
+      </div>
+    </Wrapper>
   );
 };
 

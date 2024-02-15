@@ -4,7 +4,7 @@ const SidebarHeader = () => {
   return (
     <header>
       <Logo />
-      <h4 className="fw-bold text-secondary">911 Volts</h4>
+      <h4 className="fw-bold text-secondary">SL</h4>
     </header>
   );
 };

@@ -1,27 +1,32 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
+  .cart {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
   .row {
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
+    display: grid;
     flex-wrap: wrap;
     margin: 0 -16px;
+    grid-template-columns: 65% 35%;
+  }
+  .container-row {
+    display: grid;
+    flex-wrap: wrap;
+    margin: 0 -16px;
+    grid-template-columns: 1fr;
   }
 
   .col-25 {
-    -ms-flex: 25%; /* IE10 */
-    flex: 25%;
   }
 
+  .div-col-50 {
+  }
   .col-50 {
-    -ms-flex: 50%; /* IE10 */
-    flex: 50%;
   }
-
   .col-75 {
-    -ms-flex: 75%; /* IE10 */
-    flex: 75%;
   }
 
   .col-25,
@@ -29,7 +34,27 @@ const Wrapper = styled.section`
   .col-75 {
     padding: 0 16px;
   }
+  @media (min-width: 1050px) {
+    .row {
+      display: grid;
+      flex-wrap: wrap;
+      margin: 0 -16px;
+      grid-template-columns: 75% 25%;
+    }
+    .container-row {
+      display: grid;
+      flex-wrap: wrap;
+      margin: 0 -16px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .div-col-50 {
+    }
+    .col-25 {
+    }
 
+    .col-75 {
+    }
+  }
   .container {
     background-color: #f2f2f2;
     padding: 5px 20px 15px 20px;

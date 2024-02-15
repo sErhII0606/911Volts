@@ -14,7 +14,7 @@ const CartComponent = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container cart">
         <h4>
           <Link to="/cart"> Cart</Link>{" "}
           <span className="price">

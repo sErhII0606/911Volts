@@ -50,8 +50,8 @@ const Checkout = () => {
         <div className="col-75">
           <div className="container">
             <form>
-              <div className="row">
-                <div className="col-50">
+              <div className="container-row">
+                <div className="div-col-50">
                   <h3>Billing Address</h3>
                   <FormRow
                     type="text"
@@ -117,7 +117,7 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                <div className="col-50">
+                <div className="div-col-50">
                   <h3>Payment</h3>
                   <p>
                     Currently receive payments by phone only! Our sales manager
@@ -195,24 +195,13 @@ const Checkout = () => {
                     toast.warn("Please fill out all fields");
                     return;
                   }
-                  console.log({
-                    id: Date.now().toString(),
-                    userId: user.userId,
-                    items: cart,
-                    address:
-                      values.address +
-                      "," +
-                      values.city +
-                      "," +
-                      values.state +
-                      "," +
-                      values.zip,
-                  });
                   dispatcher(
                     createOrder({
                       id: Date.now().toString(),
+                      date: new Date().toDateString(),
                       userId: user.userId,
                       items: cart,
+
                       address:
                         values.address +
                         "," +
@@ -240,7 +229,7 @@ const Checkout = () => {
             </form>
           </div>
         </div>
-        <div className="col-25">
+        <div className="col-25 ">
           <CartComponent />
         </div>
       </div>

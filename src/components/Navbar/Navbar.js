@@ -75,7 +75,7 @@ const NavbarN = () => {
           </div>
           <Navbar.Brand>
             <Link className="navbar-brand" to="/">
-              <span>911 Volts</span>
+              <span>SL</span>
             </Link>
           </Navbar.Brand>
           <Nav className="me-auto ">
