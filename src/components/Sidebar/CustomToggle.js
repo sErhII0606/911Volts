@@ -1,7 +1,7 @@
 import React from "react";
 import { useAccordionButton } from "react-bootstrap/AccordionButton";
 import { useNavigate } from "react-router-dom";
-const CustomToggle = ({ children, eventKey, category }) => {
+const CustomToggle = ({ children, eventKey, category, login, cart }) => {
   const decoratedOnClick = useAccordionButton(eventKey);
   const navigate = useNavigate();
   return (
@@ -11,6 +11,8 @@ const CustomToggle = ({ children, eventKey, category }) => {
       onClick={() => {
         decoratedOnClick();
         if (category) navigate(`/categories/${category}`);
+        if (login) navigate(`/login`);
+        if (cart) navigate(`/cart`);
       }}
     >
       {children}

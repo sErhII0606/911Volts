@@ -1,10 +1,13 @@
 import Accordion from "react-bootstrap/Accordion";
 import SidebarCard from "./SidebarCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { categories } from "../../data";
+import { handleClose } from "../../features/sidebar/sidebarSlice";
 
 const SidebarBody = () => {
   // const { categories } = useSelector((store) => store.allProducts);
+  const dispatcher = useDispatch();
+  const handleClick = () => dispatcher(handleClose());
   return (
     <Accordion alwaysOpen>
       <SidebarCard
@@ -17,13 +20,25 @@ const SidebarBody = () => {
                 eventKey={i}
                 title={category}
                 category={category}
+                handleClick={handleClick}
                 body=""
               />
             </div>
           );
         })}
       />
-      <SidebarCard eventKey="1" />
+      <SidebarCard
+        eventKey="1"
+        title="Login"
+        login={true}
+        handleClick={handleClick}
+      />
+      <SidebarCard
+        eventKey="2"
+        title="Cart"
+        cart={true}
+        handleClick={handleClick}
+      />
     </Accordion>
   );
 };

@@ -7,13 +7,21 @@ const SidebarCard = ({
   eventKey,
   title,
   category,
-  body = "random text or another card here",
+  login,
+  cart,
+  body,
+  handleClick,
 }) => {
   return (
     <Card>
       <Card.Header>
-        <CustomToggle eventKey={eventKey} category={category ? category : null}>
-          {title || "Click me!"}
+        <CustomToggle
+          eventKey={eventKey}
+          category={category}
+          login={login}
+          cart={cart}
+        >
+          <span onClick={handleClick}>{title}</span>
         </CustomToggle>
       </Card.Header>
       {body && (
