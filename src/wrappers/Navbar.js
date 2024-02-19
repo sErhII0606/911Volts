@@ -24,8 +24,6 @@ const Wrapper = styled.section`
     cursor: pointer;
   }
   .navbar-icons_search {
-    position: absolute;
-    right: 0;
     display: flex;
     height: 30px;
   }
@@ -45,7 +43,6 @@ const Wrapper = styled.section`
     height: 30px;
   }
   .sidebar-btn {
-    position: absolute;
   }
   .logo {
     height: 60px;

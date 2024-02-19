@@ -79,7 +79,7 @@ const NavbarN = () => {
               &#9776; Open SidebarTest
             </button>
           </div> */}
-          {width >= 1000 && (
+          {width >= 990 && (
             <div className="navbar-links">
               {" "}
               <BigNavbar />{" "}
