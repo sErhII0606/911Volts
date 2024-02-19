@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 const SingleOrder = ({ order }) => {
-  //console.log(order);
   const orderStatus = (paid, shipped) => {
     if (!paid && !shipped) {
       return "awaiting payment";

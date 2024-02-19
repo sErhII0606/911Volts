@@ -1,10 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "../../features/user/userSlice";
+import {
+  loginUser,
+  registerUser,
+  setIsMember,
+} from "../../features/user/userSlice";
 import FormRow from "../FormRow";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { phoneNumberValidFormat } from "../../utils/phoneNumberValidFormat";
 
 const initialState = {
   FirstName: "",
@@ -21,7 +26,7 @@ const initialAddress = {
   state: "",
   zipCode: "",
 };
-const Register = ({ setMember }) => {
+const Register = () => {
   const [values, setValues] = React.useState(initialState);
   const [address, setAddress] = React.useState(initialAddress);
   const handleChange = (e) => {
@@ -34,7 +39,6 @@ const Register = ({ setMember }) => {
     const value = e.target.value;
     setAddress({ ...address, [name]: value });
   };
-  console.log(values);
   const { isLoading } = useSelector((store) => store.user);
   const dispatcher = useDispatch();
   return (
@@ -48,7 +52,7 @@ const Register = ({ setMember }) => {
               type="email"
               handleChange={handleChange}
               name="email"
-              labelText="Email"
+              labelText="Email *"
               value={values.email}
               placeholder="johnsmith@gmail.com"
             />
@@ -57,7 +61,7 @@ const Register = ({ setMember }) => {
               type="password"
               handleChange={handleChange}
               name="password"
-              labelText="Password"
+              labelText="Password *"
               value={values.password}
               placeholder=""
             />
@@ -66,7 +70,7 @@ const Register = ({ setMember }) => {
               type="password"
               handleChange={handleChange}
               name="confirmPassword"
-              labelText="Confirm Password"
+              labelText="Confirm Password *"
               value={values.confirmPassword}
               placeholder=""
             />
@@ -76,14 +80,14 @@ const Register = ({ setMember }) => {
               type="text"
               handleChange={handleChange}
               name="FirstName"
-              labelText="First Name"
+              labelText="First Name *"
               value={values.FirstName}
               placeholder="John"
             />
             <FormRow
               name="LastName"
               type="text"
-              labelText="Last Name"
+              labelText="Last Name *"
               handleChange={handleChange}
               value={values.LastName}
               placeholder="Smith"
@@ -102,7 +106,7 @@ const Register = ({ setMember }) => {
               type="text"
               handleChange={handleChange}
               name="phoneNumber"
-              labelText="Phone Number"
+              labelText="Phone Number *"
               value={values.phoneNumber}
               placeholder="+13121234567"
             />
@@ -113,7 +117,7 @@ const Register = ({ setMember }) => {
               type="text"
               handleChange={handleChangeAddress}
               name="street"
-              labelText="Address"
+              labelText="Address "
               value={address.street}
               placeholder="478 e River rd"
             />
@@ -122,7 +126,7 @@ const Register = ({ setMember }) => {
               type="text"
               handleChange={handleChangeAddress}
               name="city"
-              labelText="City"
+              labelText="City "
               value={address.city}
               placeholder="Elk Groove Village"
             />
@@ -131,7 +135,7 @@ const Register = ({ setMember }) => {
               type="text"
               handleChange={handleChangeAddress}
               name="state"
-              labelText="State"
+              labelText="State "
               value={address.state}
               placeholder="IL"
             />
@@ -140,7 +144,7 @@ const Register = ({ setMember }) => {
               type="text"
               handleChange={handleChangeAddress}
               name="zipCode"
-              labelText="Zip Code"
+              labelText="Zip Code "
               value={address.zipCode}
               placeholder="60007"
             />
@@ -152,13 +156,24 @@ const Register = ({ setMember }) => {
             disabled={isLoading ? true : false}
             onClick={(e) => {
               e.preventDefault();
+              if (
+                !values.email ||
+                !values.password ||
+                !values.FirstName ||
+                !values.LastName ||
+                !values.phoneNumber
+              ) {
+                toast.error("Please fill out all requested fields");
+                return;
+              }
               if (values.password !== values.confirmPassword) {
                 toast.error("Please confirm your password");
                 return;
               }
               values.address = `${address.street},${address.city},${address.state},${address.zipCode}`;
+              values.phoneNumber = phoneNumberValidFormat(values.phoneNumber);
               dispatcher(registerUser(values));
-              setMember(true);
+              //dispatcher(setIsMember(true));
               setAddress(initialAddress);
               setValues(initialState);
             }}
@@ -170,7 +185,10 @@ const Register = ({ setMember }) => {
         <div className="center-text">
           <p>
             Already a member?
-            <Button variant="link" onClick={() => setMember(true)}>
+            <Button
+              variant="link"
+              onClick={() => dispatcher(setIsMember(true))}
+            >
               {" "}
               login?
             </Button>

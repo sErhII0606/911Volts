@@ -1,16 +1,11 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-  .cart {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-  }
   .row {
     display: grid;
     flex-wrap: wrap;
     margin: 0 -16px;
-    grid-template-columns: 65% 35%;
+    grid-template-columns: 1fr;
   }
   .container-row {
     display: grid;
@@ -18,7 +13,11 @@ const Wrapper = styled.section`
     margin: 0 -16px;
     grid-template-columns: 1fr;
   }
-
+  .cart {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+  }
   .col-25 {
   }
 

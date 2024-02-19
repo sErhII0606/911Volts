@@ -8,30 +8,56 @@ const Wrapper = styled.section`
     padding: 10px 15px;
     border: none;
   }
-
+  .navbar-custom {
+    margin-top: 15px;
+  }
+  .navbar-links {
+    display: flex;
+  }
   .openbtn:hover {
     background-color: #444;
   }
   .cart-container {
-    padding: 10px;
+    padding-right: 15px;
     display: flex;
     align-items: center;
     cursor: pointer;
   }
-  .login {
-    padding: 10px;
+  .navbar-icons_search {
+    position: absolute;
+    right: 0;
     display: flex;
+    height: 30px;
+  }
+  .login {
+    padding-right: 10px;
+    cursor: pointer;
     align-items: center;
   }
   .user-icon:hover {
+    color: blue;
+  }
+  .cart-container:hover {
     color: blue;
   }
   .icon {
     width: 27px;
     height: 30px;
   }
-  .cart-container:hover {
-    color: blue;
+  .sidebar-btn {
+    position: absolute;
+  }
+  .logo {
+    height: 60px;
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  .nav-link {
+    text-align: center;
+    padding-top: 15px;
+  }
+  .nav-link:hover {
+    background-color: darkgray;
   }
 `;
 export default Wrapper;

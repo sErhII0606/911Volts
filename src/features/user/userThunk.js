@@ -13,7 +13,7 @@ export const loginUserThunk = async (user, thunkAPI) => {
     });
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 };
 export const registerUserThunk = async (user, thunkAPI) => {
@@ -24,7 +24,7 @@ export const registerUserThunk = async (user, thunkAPI) => {
     });
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 };
 export const createOrderThunk = async (order, thunkAPI) => {
@@ -37,7 +37,7 @@ export const createOrderThunk = async (order, thunkAPI) => {
     });
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 };
 export const getUserOrderHistoryThunk = async (userId, thunkAPI) => {
@@ -50,6 +50,6 @@ export const getUserOrderHistoryThunk = async (userId, thunkAPI) => {
     });
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 };

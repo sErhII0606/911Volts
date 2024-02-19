@@ -1,7 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "../features/user/userSlice";
+import {
+  loginUser,
+  registerUser,
+  setIsMember,
+} from "../features/user/userSlice";
 import Wrapper from "../wrappers/Login";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -19,13 +23,12 @@ const initialState = {
 };
 const Login = () => {
   const [values, setValues] = React.useState(initialState);
-  const [member, setMember] = React.useState(true);
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setValues({ ...values, [name]: value });
   };
-  const { user, isLoading } = useSelector((store) => store.user);
+  const { user, isLoading, isMember } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatcher = useDispatch();
   React.useEffect(() => {
@@ -33,10 +36,10 @@ const Login = () => {
       navigate("/user");
     }
   }, [user]);
-  if (!member) {
+  if (!isMember) {
     return (
       <Wrapper>
-        <Register setMember={setMember} />
+        <Register />
       </Wrapper>
     );
   }
@@ -82,7 +85,10 @@ const Login = () => {
           <div className="center-text">
             <p>
               Not a member yet?
-              <Button variant="link" onClick={() => setMember(false)}>
+              <Button
+                variant="link"
+                onClick={() => dispatcher(setIsMember(false))}
+              >
                 {" "}
                 Signup?
               </Button>

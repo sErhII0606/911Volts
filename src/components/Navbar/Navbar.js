@@ -25,12 +25,15 @@ import {
 import UserNavbar from "./UserNavbar";
 import Wrapper from "../../wrappers/Navbar";
 import SearchForm from "./SearchForm";
+import BigNavbar from "./BigNavbar";
+import useDeviceSize from "../../utils/useDeviceSize";
 const NavbarN = () => {
   const { search } = useSelector((store) => store.search);
   const { user } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatcher = useDispatch();
   const { cart, total } = useSelector((store) => store.cart);
+  const [width, height] = useDeviceSize();
   const handleSearch = () => {
     if (window.location.href.includes("/categories/")) {
       const arr = window.location.href.split("/");
@@ -53,16 +56,19 @@ const NavbarN = () => {
 
   return (
     <Wrapper>
-      <Navbar expand="lg" className="bg-body-tertiary">
-        <Container>
+      <Navbar expand="lg" className="bg-body-tertiary navbar-custom">
+        <div className="sidebar-btn">
           <Button
             variant="primary"
             onClick={() => {
               dispatcher(handleShow());
             }}
           >
-            Launch
+            &#9776;
           </Button>
+        </div>
+        <Container>
+          {/* 
           <div>
             <button
               className="openbtn"
@@ -72,91 +78,66 @@ const NavbarN = () => {
             >
               &#9776; Open SidebarTest
             </button>
-          </div>
-          <Navbar.Brand>
-            <Link className="navbar-brand" to="/">
-              <span>SL</span>
-            </Link>
-          </Navbar.Brand>
-          <Nav className="me-auto ">
-            <Nav.Link>
-              <span
-                className="navbar-brand nav-link "
-                onClick={() => {
-                  navigate("/about");
-                }}
-              >
-                About
-              </span>
-            </Nav.Link>
-            <Nav.Link>
-              <span
-                className="navbar-brand nav-link "
-                onClick={() => {
-                  navigate("/products");
-                }}
-              >
-                products
-              </span>
-            </Nav.Link>
-          </Nav>
-
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltipCart(cart, total)}
-          >
-            <div
-              className="cart-container"
-              onClick={() => {
-                navigate("/cart");
-              }}
-            >
-              <MdShoppingCartCheckout className="icon cart-icon" />
-              <span>{`$${Math.trunc(total)}`}</span>
+          </div> */}
+          {width >= 1000 && (
+            <div className="navbar-links">
+              {" "}
+              <BigNavbar />{" "}
             </div>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="right"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltipUser(user)}
-          >
-            {user ? (
-              <span className="login">
-                <SlLogout
-                  className="icon user-icon"
-                  onClick={() => {
-                    dispatcher(logout("bye"));
-                  }}
-                />
-              </span>
-            ) : (
-              <a
-                className="login"
+          )}{" "}
+          <div className="navbar-icons_search">
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltipCart(cart, total)}
+            >
+              <div
+                className="cart-container"
                 onClick={() => {
-                  navigate("/login");
+                  navigate("/cart");
                 }}
-                //    href="https://911volts.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=79v7pq5fkdfa21sukhsknh4asj&redirect_uri=http://localhost:3000"
               >
-                <SlLogin className="icon user-icon" />
-              </a>
-            )}
-          </OverlayTrigger>
-
-          <SearchForm
-            name="search"
-            value={search}
-            inputClassName="me-2"
-            formClassName="d-flex"
-            handleClick={handleSearch}
-            handleChange={(e) => {
-              dispatcher(setSearch(e.target.value));
-            }}
-            inputPlaceholder="Search"
-            buttonVariant="outline-success"
-            buttonPlaceholder="Search"
-          />
+                <MdShoppingCartCheckout className="icon cart-icon" />
+                <span>{`$${Math.trunc(total)}`}</span>
+              </div>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltipUser(user)}
+            >
+              <div className="login">
+                {user ? (
+                  <SlLogout
+                    className="icon user-icon"
+                    onClick={() => {
+                      dispatcher(logout("bye"));
+                    }}
+                  />
+                ) : (
+                  <SlLogin
+                    className="icon user-icon"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  />
+                )}
+              </div>
+            </OverlayTrigger>
+            <SearchForm
+              name="search"
+              value={search}
+              inputClassName="me-2"
+              formClassName="d-flex"
+              handleClick={handleSearch}
+              handleChange={(e) => {
+                dispatcher(setSearch(e.target.value));
+              }}
+              inputPlaceholder="Search"
+              buttonVariant="outline-success"
+              buttonPlaceholder="Search"
+            />
+          </div>
         </Container>
       </Navbar>
 

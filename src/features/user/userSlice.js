@@ -24,6 +24,7 @@ const initialUser = {};
 
 const initialState = {
   isLoading: false,
+  isMember: true,
   isSidebarOpen: false,
   isOrderLoading: false,
   isOrderHistoryLoading: false,
@@ -58,6 +59,9 @@ const userSlice = createSlice({
       removeCartFromLocalStorage();
       toast.warn(payload);
     },
+    setIsMember: (state, { payload }) => {
+      state.isMember = payload;
+    },
     /*     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     }, */
@@ -88,19 +92,19 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.isLoading = false;
-        toast.error(payload);
+        toast.error(payload.message);
       })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         const { user } = payload;
+        state.isMember = true;
         state.isLoading = false;
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
         state.isLoading = false;
-
-        toast.error(payload);
+        toast.error(payload.message);
       })
       .addCase(createOrder.pending, (state) => {
         state.isOrderLoading = true;
@@ -113,7 +117,7 @@ const userSlice = createSlice({
       .addCase(createOrder.rejected, (state, { payload }) => {
         state.isOrderLoading = false;
 
-        toast.error(payload);
+        toast.error(payload.message);
       })
       .addCase(getUserOrderHistory.pending, (state) => {
         state.isOrderHistoryLoading = true;
@@ -124,7 +128,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrderHistory.rejected, (state, { payload }) => {
         state.isOrderHistoryLoading = false;
-        toast.error(payload);
+        toast.error(payload.message);
       }); /* 
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
@@ -163,5 +167,5 @@ const userSlice = createSlice({
   },*/
   },
 });
-export const { /* toggleSidebar,  */ logout } = userSlice.actions;
+export const { /* toggleSidebar,  */ logout, setIsMember } = userSlice.actions;
 export default userSlice.reducer;
