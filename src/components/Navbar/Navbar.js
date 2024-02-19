@@ -79,51 +79,56 @@ const NavbarN = () => {
               &#9776; Open SidebarTest
             </button>
           </div> */}
-          {width >= 990 && (
-            <div className="navbar-links">
-              {" "}
-              <BigNavbar />{" "}
-            </div>
+          {width >= 995 && (
+            <>
+              <div className="navbar-links">
+                {" "}
+                <BigNavbar />{" "}
+              </div>
+
+              <div className="icons">
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltipCart(cart, total)}
+                >
+                  <div
+                    className="cart-container"
+                    onClick={() => {
+                      navigate("/cart");
+                    }}
+                  >
+                    <MdShoppingCartCheckout className="icon cart-icon" />
+                    <span>{`$${Math.trunc(total)}`}</span>
+                  </div>
+                </OverlayTrigger>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltipUser(user)}
+                >
+                  <div className="login">
+                    {user ? (
+                      <SlLogout
+                        className="icon user-icon"
+                        onClick={() => {
+                          dispatcher(logout("bye"));
+                        }}
+                      />
+                    ) : (
+                      <SlLogin
+                        className="icon user-icon"
+                        onClick={() => {
+                          navigate("/login");
+                        }}
+                      />
+                    )}
+                  </div>
+                </OverlayTrigger>
+              </div>
+            </>
           )}{" "}
-          <div className="navbar-icons_search">
-            <OverlayTrigger
-              placement="bottom"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltipCart(cart, total)}
-            >
-              <div
-                className="cart-container"
-                onClick={() => {
-                  navigate("/cart");
-                }}
-              >
-                <MdShoppingCartCheckout className="icon cart-icon" />
-                <span>{`$${Math.trunc(total)}`}</span>
-              </div>
-            </OverlayTrigger>
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltipUser(user)}
-            >
-              <div className="login">
-                {user ? (
-                  <SlLogout
-                    className="icon user-icon"
-                    onClick={() => {
-                      dispatcher(logout("bye"));
-                    }}
-                  />
-                ) : (
-                  <SlLogin
-                    className="icon user-icon"
-                    onClick={() => {
-                      navigate("/login");
-                    }}
-                  />
-                )}
-              </div>
-            </OverlayTrigger>
+          <div className="search">
             <SearchForm
               name="search"
               value={search}

@@ -8,9 +8,6 @@ const Wrapper = styled.section`
     padding: 10px 15px;
     border: none;
   }
-  .navbar-custom {
-    margin-top: 15px;
-  }
   .navbar-links {
     display: flex;
   }
@@ -23,9 +20,8 @@ const Wrapper = styled.section`
     align-items: center;
     cursor: pointer;
   }
-  .navbar-icons_search {
-    display: flex;
-    height: 30px;
+  .search {
+    margin: auto;
   }
   .login {
     padding-right: 10px;
@@ -42,7 +38,14 @@ const Wrapper = styled.section`
     width: 27px;
     height: 30px;
   }
+  .icons {
+    display: flex;
+    position: absolute;
+    right: 15px;
+  }
   .sidebar-btn {
+    position: absolute;
+    left: 15px;
   }
   .logo {
     height: 60px;
