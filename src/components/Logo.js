@@ -5,7 +5,7 @@ import logo from "../logo/logo.png";
 const Logo = () => {
   return (
     <Wrapper>
-      <img src={logo} alt="logo" className="logo" />
+      <img src={logo} alt="logo" className="logo " />
     </Wrapper>
   );
 };

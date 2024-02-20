@@ -7,6 +7,7 @@ const Wrapper = styled.section`
     color: white;
     padding: 10px 15px;
     border: none;
+    margin: auto;
   }
   .navbar-links {
     display: flex;

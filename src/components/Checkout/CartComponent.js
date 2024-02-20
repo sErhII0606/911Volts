@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Image } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import { priceStringToNumber } from "../../utils/priceTransformer";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonContainer from "./ButtonContainer";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import NameTooltip from "./NameTooltip";
-const CartComponent = () => {
+const CartComponent = ({ handleClick }) => {
   const { cart, total } = useSelector((store) => store.cart);
-
+  const navigate = useNavigate();
   return (
     <>
       <div className="container cart">
@@ -55,6 +55,16 @@ const CartComponent = () => {
             <b>{`$${Math.trunc(total)}`}</b>
           </span>
         </p>
+        <hr></hr>
+        <Button
+          variant="primary"
+          onClick={() => {
+            navigate("/checkout");
+            handleClick();
+          }}
+        >
+          proceed to checkout
+        </Button>
       </div>
     </>
   );

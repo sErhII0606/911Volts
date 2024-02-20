@@ -19,6 +19,7 @@ import SharedLayoutUser from "./pages/dashboard/SharedLayoutUser";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/dashboard/OrderHistory";
+import MainCategories from "./pages/Categories/MainCategories";
 function App() {
   return (
     <BrowserRouter>
@@ -31,7 +32,7 @@ function App() {
             <Route path=":productId" element={<SingleProduct />} />
           </Route>
           <Route path="categories" element={<SharedCategories />}>
-            <Route index element={<Categories />} />
+            <Route index element={<MainCategories />} />
             <Route path=":category" element={<SingleCategory />} />
           </Route>
           <Route path="login" element={<Login></Login>} />

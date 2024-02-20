@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SlLogin, SlLogout } from "react-icons/sl";
 import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -11,13 +11,13 @@ import {
   getAllProducts,
   searchByCategory,
 } from "../../features/AllProducts/allProductsSlice";
+import { setSearch } from "../../features/search/searchSlice";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { gettingUser, logout } from "../../features/user/userSlice";
-import { setSearch } from "../../features/search/searchSlice";
 import {
   handleShow,
   toggleSidebarTest,
@@ -57,35 +57,23 @@ const NavbarN = () => {
   return (
     <Wrapper>
       <Navbar expand="lg" className="bg-body-tertiary navbar-custom">
-        <div className="sidebar-btn">
-          <Button
-            variant="primary"
-            onClick={() => {
-              dispatcher(handleShow());
-            }}
-          >
-            &#9776;
-          </Button>
-        </div>
         <Container>
-          {/* 
-          <div>
-            <button
-              className="openbtn"
+          <div className="sidebar-btn">
+            <Button
+              variant="primary"
               onClick={() => {
-                dispatcher(toggleSidebarTest());
+                dispatcher(handleShow());
               }}
             >
-              &#9776; Open SidebarTest
-            </button>
-          </div> */}
+              &#9776;
+            </Button>
+          </div>
           {width >= 995 && (
             <>
               <div className="navbar-links">
                 {" "}
                 <BigNavbar />{" "}
               </div>
-
               <div className="icons">
                 <OverlayTrigger
                   placement="bottom"
@@ -103,7 +91,7 @@ const NavbarN = () => {
                   </div>
                 </OverlayTrigger>
                 <OverlayTrigger
-                  placement="right"
+                  placement="bottom"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltipUser(user)}
                 >
@@ -125,24 +113,24 @@ const NavbarN = () => {
                     )}
                   </div>
                 </OverlayTrigger>
+              </div>{" "}
+              <div className="search">
+                <SearchForm
+                  name="search"
+                  value={search}
+                  inputClassName="me-2"
+                  formClassName="d-flex"
+                  handleClick={handleSearch}
+                  handleChange={(e) => {
+                    dispatcher(setSearch(e.target.value));
+                  }}
+                  inputPlaceholder="Search"
+                  buttonVariant="outline-success"
+                  buttonPlaceholder="Search"
+                />
               </div>
             </>
           )}{" "}
-          <div className="search">
-            <SearchForm
-              name="search"
-              value={search}
-              inputClassName="me-2"
-              formClassName="d-flex"
-              handleClick={handleSearch}
-              handleChange={(e) => {
-                dispatcher(setSearch(e.target.value));
-              }}
-              inputPlaceholder="Search"
-              buttonVariant="outline-success"
-              buttonPlaceholder="Search"
-            />
-          </div>
         </Container>
       </Navbar>
 

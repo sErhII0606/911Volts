@@ -3,16 +3,24 @@ import SidebarCard from "./SidebarCard";
 import { useDispatch, useSelector } from "react-redux";
 import { categories } from "../../data";
 import { handleClose } from "../../features/sidebar/sidebarSlice";
+import CartComponent from "../Checkout/CartComponent";
 
 const SidebarBody = () => {
-  // const { categories } = useSelector((store) => store.allProducts);
+  const { user } = useSelector((store) => store.user);
   const dispatcher = useDispatch();
-  const handleClick = () => dispatcher(handleClose());
+  const handleClickClose = () => dispatcher(handleClose());
   return (
     <Accordion alwaysOpen>
       <SidebarCard
+        eventKey="3"
+        title="Home"
+        home={true}
+        handleClick={handleClickClose}
+      />{" "}
+      <SidebarCard
         eventKey="0"
         title="Main Categories"
+        categories={true}
         body={categories.map((category, i) => {
           return (
             <div key={i}>
@@ -20,7 +28,7 @@ const SidebarBody = () => {
                 eventKey={i}
                 title={category}
                 category={category}
-                handleClick={handleClick}
+                handleClick={handleClickClose}
                 body=""
               />
             </div>
@@ -28,17 +36,33 @@ const SidebarBody = () => {
         })}
       />
       <SidebarCard
-        eventKey="1"
-        title="Login"
-        login={true}
-        handleClick={handleClick}
+        eventKey="4"
+        title="Products"
+        products={true}
+        handleClick={handleClickClose}
       />
       <SidebarCard
         eventKey="2"
         title="Cart"
         cart={true}
-        handleClick={handleClick}
+        /*   */
+        body={<CartComponent handleClick={handleClickClose} />}
       />
+      {user ? (
+        <SidebarCard
+          eventKey="1"
+          title="Logout"
+          isUser={true}
+          handleClick={handleClickClose}
+        />
+      ) : (
+        <SidebarCard
+          eventKey="1"
+          title="Login"
+          login={true}
+          handleClick={handleClickClose}
+        />
+      )}
     </Accordion>
   );
 };

@@ -7,10 +7,14 @@ const SidebarCard = ({
   eventKey,
   title,
   category,
+  categories,
   login,
   cart,
+  home,
   body,
   handleClick,
+  products,
+  isUser,
 }) => {
   return (
     <Card>
@@ -18,8 +22,12 @@ const SidebarCard = ({
         <CustomToggle
           eventKey={eventKey}
           category={category}
+          categories={categories}
           login={login}
           cart={cart}
+          home={home}
+          products={products}
+          isUser={isUser}
         >
           <span onClick={handleClick}>{title}</span>
         </CustomToggle>
