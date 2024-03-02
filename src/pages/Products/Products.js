@@ -36,7 +36,7 @@ const Products = () => {
     <Wrapper>
       <section className="slick-container">
         <div className="products">
-          {products.slice((page - 1) * 5, page * 5).map((product, i) => {
+          {products.map((product, i) => {
             return <ProductPlaceholder key={i} product={product} />;
           })}
         </div>

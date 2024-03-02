@@ -75,7 +75,6 @@ const Wrapper = styled.section`
       padding: 15px;
     }
     .pagination-img-container {
-      justify-content: center;
     }
     .main-img {
       justify-content: center;

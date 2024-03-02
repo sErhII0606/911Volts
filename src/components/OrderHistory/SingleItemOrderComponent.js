@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const SingleItemOrderComponent = ({ item }) => {
   const navigate = useNavigate();
+  console.log(item);
   return (
     <div className="single-item">
       <NameTooltip id={item.product.name} title={item.product.name}>

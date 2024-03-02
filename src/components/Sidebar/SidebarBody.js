@@ -21,7 +21,7 @@ const SidebarBody = () => {
         eventKey="0"
         title="Main Categories"
         categories={true}
-        body={categories.map((category, i) => {
+        body={categories.sort().map((category, i) => {
           return (
             <div key={i}>
               <SidebarCard

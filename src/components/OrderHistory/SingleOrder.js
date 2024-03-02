@@ -17,13 +17,15 @@ const SingleOrder = ({ order }) => {
   };
   return (
     <div>
-      <Card>
+      <Card name={order.orderId}>
         <Card.Header>{`Ordered: ${order.date}`}</Card.Header>
         <Card.Body>
           <Card.Title>{`Order status: ${orderStatus(
             order.paid,
             order.shipped
-          )} Total: $${order.total} Shipped to: ${order.address}`}</Card.Title>
+          )}. Total: $${Math.trunc(order.total)}. Shipped to: ${
+            order.address
+          }.`}</Card.Title>
           <div className="single-order-container">
             {" "}
             {order.items.map((item, index) => {
@@ -31,7 +33,17 @@ const SingleOrder = ({ order }) => {
             })}{" "}
           </div>
           {!order.paid && (
-            <Button variant="primary">Add more items to the order</Button>
+            <Button
+              variant="primary"
+              onClick={(e) => {
+                console.log(
+                  e.target.offsetParent,
+                  e.target.offsetParent.attributes.name.nodeValue
+                );
+              }}
+            >
+              Add more items to the order
+            </Button>
           )}
         </Card.Body>
       </Card>

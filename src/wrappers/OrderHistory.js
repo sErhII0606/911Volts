@@ -2,6 +2,8 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   .single-order-container {
     display: flex;
+    overflow: auto;
+    scrollbar-width: thin;
   }
   .single-item-img {
     width: 55px;

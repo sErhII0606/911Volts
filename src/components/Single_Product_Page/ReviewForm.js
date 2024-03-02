@@ -24,7 +24,7 @@ function ReviewForm({ product }) {
     reviewId: Date.now(),
     reviewUserExperience: "",
     reviewEmail: user?.email,
-    reviewName: user?.Username || "",
+    reviewName: user?.userName || "",
     reviewCompany: user?.company || "",
     reviewReview: "",
     author: user,

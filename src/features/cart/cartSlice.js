@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   addCartToLocalStorage,
@@ -7,8 +7,10 @@ import {
 } from "../../utils/localStorage";
 import { priceStringToNumber } from "../../utils/priceTransformer";
 import { Image } from "react-bootstrap";
+import { createOrderThunk } from "./cartThunk";
 
 const initialState = {
+  isOrderLoading: false,
   cart: getCartFromLocalStorage() ? getCartFromLocalStorage() : [],
   total: 0,
 };
@@ -22,6 +24,11 @@ const createToast = (text, name, img) => {
     </>
   );
 };
+
+export const createOrder = createAsyncThunk(
+  "user/createOrder",
+  createOrderThunk
+);
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -119,6 +126,22 @@ const cartSlice = createSlice({
       });
       state.total = total;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(createOrder.fulfilled, (state, { payload }) => {
+        toast.success("Your order is created");
+        state.cart = [];
+        state.isOrderLoading = false;
+      })
+      .addCase(createOrder.rejected, (state, { payload }) => {
+        state.isOrderLoading = false;
+        console.log(payload);
+        toast.error(payload);
+      });
   },
 });
 export const {

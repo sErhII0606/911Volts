@@ -140,19 +140,11 @@
 export const banners = [
   {
     id: "1",
-    img: "https://scontent-ord5-1.xx.fbcdn.net/v/t39.30808-6/394535283_862655615564134_7642687529978530398_n.png?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=HY0qZt1bsroAX9MS34-&_nc_ht=scontent-ord5-1.xx&oh=00_AfCnqHUsVqpU1oxjVAmKh2IGu_yugpqKjcA0lsx6KLOseA&oe=6598A906",
+    img: "https://s3-media0.fl.yelpcdn.com/bphoto/DSwhECjls8UbfCG9R-GfMA/o.jpg",
   },
   {
     id: "2",
-    img: "https://s1-ecp.signs.com/4024/583x357/Mesh-Fence-Banner-Soccer-Camp-Registration-SQS-12181.jpg",
-  },
-  {
-    id: "11",
-    img: "https://s1-ecp.signs.com/4023/583x357/Mesh-Fence-Banner-Soccer-Camp-Registration2-SQS-12182.jpg",
-  },
-  {
-    id: "21",
-    img: "https://s1-ecp.signs.com/4020/583x357/Mesh-Fence-Banner-Fence-Measurements-SQS-12185.jpg",
+    img: "https://s3-media0.fl.yelpcdn.com/bphoto/s-wqOC1eTlQIHCBJRT1i4Q/o.jpg",
   },
 ];
 export const x_api_key = "8tOOANd4844iGdhsGyymS3tC7glMCqz31Z3bNA2i";
@@ -165,6 +157,11 @@ export const categories = [
   "FogLight",
   "Mirrors",
   "Grills",
+  "Filter",
+  "Gasket",
+  "Water Pump",
+  "Alternator",
+  "Sensor",
 ];
 
 export const token = "";

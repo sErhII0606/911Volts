@@ -3,6 +3,8 @@ import Nav from "react-bootstrap/Nav";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/user/userSlice";
 
 const Wrapper = styled.section`
   .user-navbar {
@@ -13,6 +15,7 @@ const Wrapper = styled.section`
 
 const UserNavbar = ({ user }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <Wrapper>
       <Nav variant="tabs" defaultActiveKey="/" className="user-navbar">
@@ -27,10 +30,11 @@ const UserNavbar = ({ user }) => {
           >
             Order History
           </NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+          <NavDropdown.Item>Another action</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+          <NavDropdown.Item onClick={() => dispatch(logout())}>
+            logout
+          </NavDropdown.Item>
         </NavDropdown>
         <Nav.Item>
           <Nav.Link

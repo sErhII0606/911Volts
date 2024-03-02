@@ -60,7 +60,9 @@ const CartComponent = ({ handleClick }) => {
           variant="primary"
           onClick={() => {
             navigate("/checkout");
-            handleClick();
+            if (handleClick) {
+              handleClick();
+            }
           }}
         >
           proceed to checkout

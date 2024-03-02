@@ -15,7 +15,7 @@ const Categories = () => {
   const { category } = useParams();
   return (
     <Nav justify variant="tabs" activeKey={`link-${category}`}>
-      {categories.map((category, i) => {
+      {categories.sort().map((category, i) => {
         const display = products.find((item) => item.category === category);
         return (
           <Nav.Item key={i}>

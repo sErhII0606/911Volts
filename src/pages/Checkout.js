@@ -3,12 +3,11 @@ import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Wrapper from "../wrappers/Checkout";
-import { createOrder } from "../features/user/userSlice";
+import { createOrder } from "../features/cart/cartSlice";
 
 import { priceStringToNumber } from "../utils/priceTransformer";
 import FormRow from "../components/FormRow";
 import { updateAmount } from "../features/singleProduct/singleProductSlice";
-import { clearCart } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
 import LoginModal from "../components/Checkout/LoginModal";
 import CartComponent from "../components/Checkout/CartComponent";
@@ -221,7 +220,6 @@ const Checkout = () => {
                       })
                     );
                   });
-                  dispatcher(clearCart());
                 }}
               >
                 Place the order

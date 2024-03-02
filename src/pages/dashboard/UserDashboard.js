@@ -5,7 +5,7 @@ const UserDashboard = () => {
   const { user } = useSelector((store) => store.user);
   return (
     <div>
-      <h2>{`Hello from ${user.userName}`}</h2>
+      <h2>{`Hello, ${user.userName}`}</h2>
     </div>
   );
 };

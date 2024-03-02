@@ -14,8 +14,6 @@ const initialState = {
   names: [],
   brands: [],
   categories: [],
-  pages: [1],
-  page: 1,
   totalProducts: 0,
   // numOfPages: 1,
   // page: 1,
@@ -43,23 +41,6 @@ const allProductsSlice = createSlice({
     hideLoading: (state) => {
       state.isLoading = false;
     },
-    setPage: (state, { payload }) => {
-      state.page = payload;
-    },
-    nextPage: (state) => {
-      if (state.page < state.pages[state.pages.length - 1]) {
-        state.page = state.page + 1;
-      } else {
-        return;
-      }
-    },
-    prevPage: (state) => {
-      if (state.page > 1) {
-        state.page = state.page - 1;
-      } else {
-        return;
-      }
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,12 +63,7 @@ const allProductsSlice = createSlice({
             )
           )
         );
-        state.pages = [1];
-        for (let i = 0; i <= payload.Count; i++) {
-          if ((i + 1) % 5 === 0) {
-            state.pages.push(state.pages[state.pages.length - 1] + 1);
-          }
-        }
+
         //  state.numOfPages = payload.numOfPages;
         state.totalProducts = payload.Count;
       })
@@ -103,12 +79,6 @@ const allProductsSlice = createSlice({
         state.products = payload.Items;
         //  state.numOfPages = payload.numOfPages;
         state.totalProducts = payload.Count;
-        state.pages = [1];
-        for (let i = 0; i <= payload.Count; i++) {
-          if ((i + 1) % 5 === 0) {
-            state.pages.push(state.pages[state.pages.length - 1] + 1);
-          }
-        }
       })
       .addCase(searchByCategory.rejected, (state, { payload }) => {
         state.isLoading = false;

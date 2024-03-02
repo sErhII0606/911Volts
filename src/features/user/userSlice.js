@@ -43,11 +43,6 @@ export const getUserOrderHistory = createAsyncThunk(
   "user/getUserOrderHistory",
   getUserOrderHistoryThunk
 );
-export const createOrder = createAsyncThunk(
-  "user/createOrder",
-  createOrderThunk
-);
-
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -106,19 +101,6 @@ const userSlice = createSlice({
         state.isLoading = false;
         toast.error(payload.message);
       })
-      .addCase(createOrder.pending, (state) => {
-        state.isOrderLoading = true;
-      })
-      .addCase(createOrder.fulfilled, (state, { payload }) => {
-        const { user } = payload;
-        toast.success("Your order is created");
-        state.isOrderLoading = false;
-      })
-      .addCase(createOrder.rejected, (state, { payload }) => {
-        state.isOrderLoading = false;
-
-        toast.error(payload.message);
-      })
       .addCase(getUserOrderHistory.pending, (state) => {
         state.isOrderHistoryLoading = true;
       })
@@ -128,7 +110,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrderHistory.rejected, (state, { payload }) => {
         state.isOrderHistoryLoading = false;
-        toast.error(payload.message);
+        toast.error(payload);
       }); /* 
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;

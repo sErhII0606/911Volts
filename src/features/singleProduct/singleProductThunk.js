@@ -71,7 +71,6 @@ export const updateAmountThunk = async ({ productId, amount }, thunkAPI) => {
     // console.log(thunkAPI.getState().allProducts);
     return resp.data;
   } catch (error) {
-    console.log(error.message);
-    return thunkAPI.rejectWithValue(error.response.data);
+    return thunkAPI.rejectWithValue(error.message);
   }
 };
