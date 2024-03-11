@@ -24,3 +24,16 @@ export const getCartFromLocalStorage = () => {
   const cart = result ? JSON.parse(result) : null;
   return cart;
 };
+export const addOrderToLocalStorage = (order) => {
+  localStorage.setItem("order", JSON.stringify(order));
+};
+
+export const removeOrderFromLocalStorage = () => {
+  localStorage.removeItem("order");
+};
+
+export const getOrderFromLocalStorage = () => {
+  const result = localStorage.getItem("order");
+  const order = result ? JSON.parse(result) : null;
+  return order;
+};

@@ -149,6 +149,7 @@ export const banners = [
 ];
 export const x_api_key = "8tOOANd4844iGdhsGyymS3tC7glMCqz31Z3bNA2i";
 export const url = "https://a1jxje323e.execute-api.us-east-2.amazonaws.com/dev";
+export const limit = 10;
 export const categories = [
   "Engine",
   "Starter",
@@ -162,6 +163,7 @@ export const categories = [
   "Water Pump",
   "Alternator",
   "Sensor",
+  "SideFarings",
 ];
 
 export const token = "";

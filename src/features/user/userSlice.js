@@ -5,15 +5,17 @@ import {
   addCartToLocalStorage,
   getCartFromLocalStorage,
   removeCartFromLocalStorage,
-} from "../../utils/localStorage";
-import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
+  addOrderToLocalStorage,
+  getOrderFromLocalStorage,
+  removeOrderFromLocalStorage,
 } from "../../utils/localStorage";
 
 import {
   loginUserThunk,
+  getUserOrderThunk,
   registerUserThunk,
   createOrderThunk,
   getUserOrderHistoryThunk,
@@ -28,6 +30,7 @@ const initialState = {
   isSidebarOpen: false,
   isOrderLoading: false,
   isOrderHistoryLoading: false,
+  order: getOrderFromLocalStorage(),
   user: getUserFromLocalStorage(), // ? getUserFromLocalStorage() : initialUser,
 };
 
@@ -43,6 +46,10 @@ export const getUserOrderHistory = createAsyncThunk(
   "user/getUserOrderHistory",
   getUserOrderHistoryThunk
 );
+export const getUserOrder = createAsyncThunk(
+  "user/getUserOrder",
+  getUserOrderThunk
+);
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -52,6 +59,7 @@ const userSlice = createSlice({
       window.location.href = "";
       removeUserFromLocalStorage();
       removeCartFromLocalStorage();
+      removeOrderFromLocalStorage();
       toast.warn(payload);
     },
     setIsMember: (state, { payload }) => {
@@ -110,6 +118,19 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrderHistory.rejected, (state, { payload }) => {
         state.isOrderHistoryLoading = false;
+        toast.error(payload);
+      })
+      .addCase(getUserOrder.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(getUserOrder.fulfilled, (state, { payload }) => {
+        state.isOrderLoading = false;
+        state.order = payload.Items[0];
+        addOrderToLocalStorage(payload.Items[0]);
+        //addCartToLocalStorage(payload.Items[0].items);
+      })
+      .addCase(getUserOrder.rejected, (state, { payload }) => {
+        state.isOrderLoading = false;
         toast.error(payload);
       }); /* 
       .addCase(registerUser.pending, (state) => {

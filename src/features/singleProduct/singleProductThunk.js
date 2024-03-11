@@ -33,7 +33,8 @@ export const postStarViewThunk = async ({ productId, starView }, thunkAPI) => {
     );
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
+    console.log(error);
+    return thunkAPI.rejectWithValue(error.message);
   }
 };
 export const getProductThunk = async (productId, thunkAPI) => {

@@ -106,7 +106,7 @@ const singleProductSlice = createSlice({
       })
       .addCase(postStarView.rejected, (state, { payload }) => {
         state.isStarsLoading = false;
-        toast.error(`Something went wrong...${payload.message}`);
+        toast.error(`Something went wrong...${payload}`);
       })
       .addCase(updateAmount.pending, (state) => {
         state.isAmountLoading = true;

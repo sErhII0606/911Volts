@@ -10,6 +10,7 @@ import { renderTooltipCart, renderTooltipUser } from "./Tooltips";
 import {
   getAllProducts,
   searchByCategory,
+  resetNumberOfPages,
 } from "../../features/AllProducts/allProductsSlice";
 import { setSearch } from "../../features/search/searchSlice";
 import Container from "react-bootstrap/Container";
@@ -27,6 +28,7 @@ import Wrapper from "../../wrappers/Navbar";
 import SearchForm from "./SearchForm";
 import BigNavbar from "./BigNavbar";
 import useDeviceSize from "../../utils/useDeviceSize";
+import { limit } from "../../data";
 const NavbarN = () => {
   const { search } = useSelector((store) => store.search);
   const { user } = useSelector((store) => store.user);

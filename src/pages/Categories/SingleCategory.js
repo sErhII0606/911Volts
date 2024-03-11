@@ -6,10 +6,13 @@ import { searchByCategory } from "../../features/AllProducts/allProductsSlice";
 import { Spinner } from "react-bootstrap";
 import ProductPlaceholder from "../../components/Products_Page/ProductPlaceholder";
 import ProductPlaceholderHorizontal from "../../components/Products_Page/ProductPlaceholderHorizontal";
+import PagePagination from "../../components/Products_Page/PagePagination";
 import useDeviceSize from "../../utils/useDeviceSize";
 
 const SingleCategory = () => {
-  const { products, isLoading } = useSelector((store) => store.allProducts);
+  const { products, isLoading, page } = useSelector(
+    (store) => store.allProducts
+  );
   const dispatch = useDispatch();
 
   const { category } = useParams();
@@ -28,8 +31,13 @@ const SingleCategory = () => {
     <Wrapper>
       <div className="products">
         {products.map((product, i) => {
-          return <ProductPlaceholder key={i} product={product} />;
+          if (i >= page * 10 - 10 && i <= page * 10 - 1) {
+            return <ProductPlaceholder key={i} product={product} />;
+          }
         })}
+      </div>
+      <div className="page-pagination">
+        <PagePagination isLoading={isLoading} />
       </div>
     </Wrapper>
   );

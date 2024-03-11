@@ -15,8 +15,8 @@ const initialState = {
   brands: [],
   categories: [],
   totalProducts: 0,
-  // numOfPages: 1,
-  // page: 1,
+  numOfPages: 1,
+  page: 1,
   stats: {},
 
   ...initialFiltersState,
@@ -41,6 +41,9 @@ const allProductsSlice = createSlice({
     hideLoading: (state) => {
       state.isLoading = false;
     },
+    setPage: (state, { payload }) => {
+      state.page = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,8 +66,8 @@ const allProductsSlice = createSlice({
             )
           )
         );
-
-        //  state.numOfPages = payload.numOfPages;
+        state.page = 1;
+        state.numOfPages = Math.ceil(payload.Count / 10);
         state.totalProducts = payload.Count;
       })
       .addCase(getAllProducts.rejected, (state, { payload }) => {
@@ -76,8 +79,9 @@ const allProductsSlice = createSlice({
       })
       .addCase(searchByCategory.fulfilled, (state, { payload }) => {
         state.isLoading = false;
+        state.page = 1;
         state.products = payload.Items;
-        //  state.numOfPages = payload.numOfPages;
+        state.numOfPages = Math.ceil(payload.Count / 10);
         state.totalProducts = payload.Count;
       })
       .addCase(searchByCategory.rejected, (state, { payload }) => {
@@ -87,7 +91,6 @@ const allProductsSlice = createSlice({
   },
 });
 
-export const { showLoading, hideLoading, setPage, prevPage, nextPage } =
-  allProductsSlice.actions;
+export const { showLoading, hideLoading, setPage } = allProductsSlice.actions;
 
 export default allProductsSlice.reducer;

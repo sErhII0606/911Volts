@@ -2,17 +2,25 @@ import React from "react";
 import SingleItemOrderComponent from "./SingleItemOrderComponent";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { useDispatch } from "react-redux";
+import { getUserOrder } from "../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const SingleOrder = ({ order }) => {
-  const orderStatus = (paid, shipped) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const orderStatus = (paid, shipped, delivered) => {
     if (!paid && !shipped) {
       return "awaiting payment";
     }
     if (paid && !shipped) {
       return "awaiting shipment";
     }
-    if (shipped) {
+    if (shipped && !delivered) {
       return "shipped";
+    }
+    if (delivered) {
+      return "delivered";
     }
   };
   return (
@@ -22,10 +30,9 @@ const SingleOrder = ({ order }) => {
         <Card.Body>
           <Card.Title>{`Order status: ${orderStatus(
             order.paid,
-            order.shipped
-          )}. Total: $${Math.trunc(order.total)}. Shipped to: ${
-            order.address
-          }.`}</Card.Title>
+            order.shipped,
+            order.delivered
+          )}. Total: $${Math.trunc(order.total)}.`}</Card.Title>
           <div className="single-order-container">
             {" "}
             {order.items.map((item, index) => {
@@ -37,12 +44,17 @@ const SingleOrder = ({ order }) => {
               variant="primary"
               onClick={(e) => {
                 console.log(
-                  e.target.offsetParent,
-                  e.target.offsetParent.attributes.name.nodeValue
+                  e.target.offsetParent.attributes,
+                  e.target.offsetParent.attributes.name.value
                 );
+
+                dispatch(
+                  getUserOrder(e.target.offsetParent.attributes.name.value)
+                );
+                navigate("/user/order");
               }}
             >
-              Add more items to the order
+              View Details
             </Button>
           )}
         </Card.Body>

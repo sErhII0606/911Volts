@@ -6,10 +6,10 @@ const header = (thunkAPI) => {
   };
 };
 
-export const getAllProductsThunk = async (name, thunkAPI) => {
+export const getAllProductsThunk = async (name, limit, thunkAPI) => {
   try {
     const resp = await customFetch.get(
-      `/products?name=${name}`, //&name=Oil Separator&brand=Volvo
+      `/products?name=${name}`, //&name=Oil Separator&brand=Volvo&limit=${limit}
       {
         headers: header(),
       }

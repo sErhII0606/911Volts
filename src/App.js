@@ -20,6 +20,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/dashboard/OrderHistory";
 import MainCategories from "./pages/Categories/MainCategories";
+import Order from "./pages/dashboard/Order";
 function App() {
   return (
     <BrowserRouter>
@@ -48,6 +49,7 @@ function App() {
           >
             <Route index element={<UserDashboard />} />
             <Route path="order_history" element={<OrderHistory />} />
+            <Route path="order" element={<Order />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Route>
