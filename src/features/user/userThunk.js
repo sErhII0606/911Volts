@@ -40,14 +40,20 @@ export const createOrderThunk = async (order, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data);
   }
 };
-export const getUserOrderHistoryThunk = async (userId, thunkAPI) => {
+export const getUserOrderHistoryThunk = async (
+  { userId, createdAt },
+  thunkAPI
+) => {
   try {
-    const resp = await customFetch.get(`/user/order_history?userId=${userId}`, {
-      headers: {
-        ...header(),
-        Authorization: thunkAPI.getState().user.user.IdToken,
-      },
-    });
+    const resp = await customFetch.get(
+      `/user/order_history?userId=${userId}&createdAt=${createdAt}`,
+      {
+        headers: {
+          ...header(),
+          Authorization: thunkAPI.getState().user.user.IdToken,
+        },
+      }
+    );
     return resp.data;
   } catch (error) {
     console.log(error);

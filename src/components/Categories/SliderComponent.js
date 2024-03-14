@@ -21,7 +21,7 @@ const SliderComponent = ({ slidesToShow }) => {
   };
   return (
     <Slider {...settings}>
-      {categories.map((category, i) => {
+      {categories.sort().map((category, i) => {
         const display = products.find((item) => item.category === category);
         return (
           <div className="content " key={i}>

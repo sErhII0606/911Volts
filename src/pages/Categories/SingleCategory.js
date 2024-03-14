@@ -10,7 +10,7 @@ import PagePagination from "../../components/Products_Page/PagePagination";
 import useDeviceSize from "../../utils/useDeviceSize";
 
 const SingleCategory = () => {
-  const { products, isLoading, page } = useSelector(
+  const { products, isLoading, page, productsPerPage } = useSelector(
     (store) => store.allProducts
   );
   const dispatch = useDispatch();
@@ -25,20 +25,25 @@ const SingleCategory = () => {
     return <Spinner />;
   }
   if (!products[0]) {
-    return <h1>Curently no Items</h1>;
+    return <h1>Currently no Items</h1>;
   }
   return (
     <Wrapper>
-      <div className="products">
-        {products.map((product, i) => {
-          if (i >= page * 10 - 10 && i <= page * 10 - 1) {
-            return <ProductPlaceholder key={i} product={product} />;
-          }
-        })}
-      </div>
-      <div className="page-pagination">
-        <PagePagination isLoading={isLoading} />
-      </div>
+      <section className="slick-container">
+        <div className="products">
+          {products.map((product, i) => {
+            if (
+              i >= page * productsPerPage - productsPerPage &&
+              i <= page * productsPerPage - 1
+            ) {
+              return <ProductPlaceholder key={i} product={product} />;
+            }
+          })}
+        </div>
+        <div className="page-pagination">
+          <PagePagination isLoading={isLoading} />
+        </div>
+      </section>
     </Wrapper>
   );
 };

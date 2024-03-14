@@ -13,9 +13,8 @@ import PagePagination from "../../components/Products_Page/PagePagination";
 import useDeviceSize from "../../utils/useDeviceSize";
 import ProductPlaceholderHorizontal from "../../components/Products_Page/ProductPlaceholderHorizontal";
 const Products = () => {
-  const { products, isLoading, numOfPages, page } = useSelector(
-    (store) => store.allProducts
-  );
+  const { products, isLoading, numOfPages, page, productsPerPage } =
+    useSelector((store) => store.allProducts);
   const { search } = useSelector((store) => store.search);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,17 +36,16 @@ const Products = () => {
       <section className="slick-container">
         <div className="products">
           {products.map((product, i) => {
-            if (i >= page * 10 - 10 && i <= page * 10 - 1) {
+            if (
+              i >= page * productsPerPage - productsPerPage &&
+              i <= page * productsPerPage - 1
+            ) {
               return <ProductPlaceholder key={i} product={product} />;
             }
           })}
         </div>
         <div className="page-pagination">
-          <PagePagination
-            isLoading={isLoading}
-            page={page}
-            numOfPages={numOfPages}
-          />
+          <PagePagination isLoading={isLoading} />
         </div>
       </section>
     </Wrapper>

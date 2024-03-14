@@ -14,6 +14,8 @@ export const createOrderThunk = async (order, thunkAPI) => {
         Authorization: thunkAPI.getState().user.user.IdToken,
       },
     });
+
+    console.log(thunkAPI.getState());
     return resp.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);

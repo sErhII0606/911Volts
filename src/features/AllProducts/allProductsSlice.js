@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { getAllProductsThunk, searchByCategoryThunk } from "./allProductThunk";
+import {
+  addProductsPerPageToLocalStorage,
+  removeProductsPerPageFromLocalStorage,
+  getProductsPerPageFromLocalStorage,
+} from "../../utils/localStorage";
 const initialFiltersState = {
   search: "",
   searchStatus: "all",
@@ -17,6 +22,7 @@ const initialState = {
   totalProducts: 0,
   numOfPages: 1,
   page: 1,
+  productsPerPage: getProductsPerPageFromLocalStorage(),
   stats: {},
 
   ...initialFiltersState,
@@ -44,6 +50,12 @@ const allProductsSlice = createSlice({
     setPage: (state, { payload }) => {
       state.page = payload;
     },
+    setProductsPerPage: (state, { payload }) => {
+      state.productsPerPage = payload;
+      state.numOfPages = Math.ceil(state.totalProducts / payload);
+      state.page = 1;
+      addProductsPerPageToLocalStorage(payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,7 +79,7 @@ const allProductsSlice = createSlice({
           )
         );
         state.page = 1;
-        state.numOfPages = Math.ceil(payload.Count / 10);
+        state.numOfPages = Math.ceil(payload.Count / state.productsPerPage);
         state.totalProducts = payload.Count;
       })
       .addCase(getAllProducts.rejected, (state, { payload }) => {
@@ -81,7 +93,7 @@ const allProductsSlice = createSlice({
         state.isLoading = false;
         state.page = 1;
         state.products = payload.Items;
-        state.numOfPages = Math.ceil(payload.Count / 10);
+        state.numOfPages = Math.ceil(payload.Count / state.productsPerPage);
         state.totalProducts = payload.Count;
       })
       .addCase(searchByCategory.rejected, (state, { payload }) => {
@@ -91,6 +103,7 @@ const allProductsSlice = createSlice({
   },
 });
 
-export const { showLoading, hideLoading, setPage } = allProductsSlice.actions;
+export const { showLoading, hideLoading, setPage, setProductsPerPage } =
+  allProductsSlice.actions;
 
 export default allProductsSlice.reducer;

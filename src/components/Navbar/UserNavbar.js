@@ -30,7 +30,7 @@ const UserNavbar = ({ user }) => {
           >
             Order History
           </NavDropdown.Item>
-          <NavDropdown.Item>Another action</NavDropdown.Item>
+          <NavDropdown.Item>Contact us</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => dispatch(logout())}>
             logout

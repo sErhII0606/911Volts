@@ -10,8 +10,11 @@ const OrderHistory = () => {
   const { userOrderHistory } = user;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUserOrderHistory(user.userId));
+    dispatch(
+      getUserOrderHistory({ userId: user.userId, createdAt: "1710123768649" })
+    );
   }, []);
+  const arr = [...userOrderHistory];
   if (isOrderHistoryLoading) {
     return <Spinner />;
   }
@@ -25,9 +28,11 @@ const OrderHistory = () => {
   return (
     <Wrapper>
       <div>
-        {user.userOrderHistory.map((order, i) => {
-          return <SingleOrder order={order} key={i} />;
-        })}
+        {arr
+          .sort((a, b) => b.createdAt - a.createdAt)
+          .map((order, i) => {
+            return <SingleOrder order={order} key={i} />;
+          })}
       </div>
     </Wrapper>
   );

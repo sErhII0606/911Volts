@@ -11,6 +11,9 @@ import {
   addOrderToLocalStorage,
   getOrderFromLocalStorage,
   removeOrderFromLocalStorage,
+  addProductsPerPageToLocalStorage,
+  removeProductsPerPageFromLocalStorage,
+  getProductsPerPageFromLocalStorage,
 } from "../../utils/localStorage";
 
 import {
@@ -56,6 +59,7 @@ const userSlice = createSlice({
   reducers: {
     logout: (state, { payload }) => {
       state.user = initialUser;
+      removeProductsPerPageFromLocalStorage();
       window.location.href = "";
       removeUserFromLocalStorage();
       removeCartFromLocalStorage();
@@ -114,6 +118,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrderHistory.fulfilled, (state, { payload }) => {
         state.isOrderHistoryLoading = false;
+
         state.user.userOrderHistory = payload.Items;
       })
       .addCase(getUserOrderHistory.rejected, (state, { payload }) => {

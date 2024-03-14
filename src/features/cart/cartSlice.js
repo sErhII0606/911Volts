@@ -135,6 +135,7 @@ const cartSlice = createSlice({
       .addCase(createOrder.fulfilled, (state, { payload }) => {
         toast.success("Your order is created");
         state.cart = [];
+        removeCartFromLocalStorage();
         state.isOrderLoading = false;
       })
       .addCase(createOrder.rejected, (state, { payload }) => {

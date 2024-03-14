@@ -37,3 +37,16 @@ export const getOrderFromLocalStorage = () => {
   const order = result ? JSON.parse(result) : null;
   return order;
 };
+export const addProductsPerPageToLocalStorage = (productsPerPage) => {
+  localStorage.setItem("productsPerPage", JSON.stringify(productsPerPage));
+};
+
+export const removeProductsPerPageFromLocalStorage = () => {
+  localStorage.removeItem("productsPerPage");
+};
+
+export const getProductsPerPageFromLocalStorage = () => {
+  const result = localStorage.getItem("productsPerPage");
+  const order = result ? JSON.parse(result) : 10;
+  return order;
+};

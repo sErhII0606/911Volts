@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Image, Spinner } from "react-bootstrap";
+import { Button, Image, Spinner } from "react-bootstrap";
 import Wrapper from "../../wrappers/Order";
 
 const Order = () => {
@@ -27,19 +27,29 @@ const Order = () => {
   return (
     <Wrapper>
       <div>
-        <h4>Order from {order.date}</h4>
-        <h5>{`Order status: ${orderStatus(
-          order.paid,
-          order.shipped,
-          order.delivered
-        )}. Total: $${Math.trunc(order.total)}.`}</h5>
-        <h5>{`Delivery  address: ${order.address}.`}</h5>
+        <h4>
+          Order from <span className="order-info">{order.date}</span>
+        </h4>
+        <h5>
+          Order status:
+          <span className="order-info">
+            {" "}
+            ${orderStatus(order.paid, order.shipped, order.delivered)}.
+          </span>{" "}
+          Total:<span className="order-info"> ${Math.trunc(order.total)}.</span>
+        </h5>
+        <h5>
+          Delivery address: <span className="order-info">{order.address}.</span>
+        </h5>
         <div className="items-container">
           <h4>Items:</h4>
           {order.items.map((item, i) => {
             return (
               <div className="item" key={i}>
-                <h5>{`${i + 1}.${item.product.name}`}</h5>
+                <h5>
+                  {i + 1}.
+                  <span className="order-info">{item.product.name}</span>
+                </h5>
                 <Image
                   rounded
                   className="product-img"
@@ -48,6 +58,13 @@ const Order = () => {
               </div>
             );
           })}
+        </div>
+
+        <div className="btn-container">
+          {!order.shipped && (
+            <Button variant="primary">Add more items to the order</Button>
+          )}
+          <Button variant="danger">Cancel the order</Button>
         </div>
       </div>
     </Wrapper>
