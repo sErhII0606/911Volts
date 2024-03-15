@@ -10,6 +10,11 @@ import ProductPerPage from "./ProductPerPage";
 const PagePagination = ({ isLoading }) => {
   const { numOfPages, page } = useSelector((store) => store.allProducts);
   const dispatch = useDispatch();
+  const handleClick = (pageSetPage) => {
+    dispatch(setPage(pageSetPage));
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
   if (isLoading) {
     return <Spinner />;
   }
@@ -19,22 +24,15 @@ const PagePagination = ({ isLoading }) => {
   }
   return (
     <div>
-      {pageArray.length == 1 ? (
-        <div />
-      ) : (
+      {
         <Pagination>
-          <Pagination.Ellipsis />
-          <Pagination.First
-            onClick={() => {
-              dispatch(setPage(1));
-            }}
-          />
+          <Pagination.First onClick={() => handleClick(1)} />
           <Pagination.Prev
             onClick={() => {
               if (page <= 1) {
                 return;
               }
-              dispatch(setPage(page - 1));
+              handleClick(page - 1);
             }}
           />
           {pageArray.map((pageNumber, i) => {
@@ -43,42 +41,56 @@ const PagePagination = ({ isLoading }) => {
                 <Pagination.Item
                   key={i}
                   active
-                  onClick={() => {
-                    dispatch(setPage(pageNumber));
-                  }}
+                  onClick={() => handleClick(pageNumber)}
+                >
+                  {pageNumber}
+                </Pagination.Item>
+              );
+            } else if (page == 1 && pageNumber <= 3) {
+              return (
+                <Pagination.Item
+                  key={i}
+                  onClick={() => handleClick(pageNumber)}
+                >
+                  {pageNumber}
+                </Pagination.Item>
+              );
+            } else if (
+              page == pageArray.length &&
+              pageNumber >= pageArray.length - 2
+            ) {
+              return (
+                <Pagination.Item
+                  key={i}
+                  onClick={() => handleClick(pageNumber)}
+                >
+                  {pageNumber}
+                </Pagination.Item>
+              );
+            } else if (pageNumber >= page - 1 && pageNumber <= page + 1) {
+              return (
+                <Pagination.Item
+                  key={i}
+                  onClick={() => handleClick(pageNumber)}
                 >
                   {pageNumber}
                 </Pagination.Item>
               );
             } else {
-              return (
-                <Pagination.Item
-                  key={i}
-                  onClick={() => {
-                    dispatch(setPage(pageNumber));
-                  }}
-                >
-                  {pageNumber}
-                </Pagination.Item>
-              );
+              return;
             }
           })}
-
           <Pagination.Next
             onClick={() => {
               if (page >= numOfPages) {
                 return;
               }
-              dispatch(setPage(page + 1));
+              handleClick(page + 1);
             }}
           />
-          <Pagination.Last
-            onClick={() => {
-              dispatch(setPage(numOfPages));
-            }}
-          />
+          <Pagination.Last onClick={() => handleClick(numOfPages)} />
         </Pagination>
-      )}
+      }
       <ProductPerPage />
     </div>
   );

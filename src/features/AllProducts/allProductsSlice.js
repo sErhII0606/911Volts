@@ -48,6 +48,7 @@ const allProductsSlice = createSlice({
       state.isLoading = false;
     },
     setPage: (state, { payload }) => {
+      console.log(payload);
       state.page = payload;
     },
     setProductsPerPage: (state, { payload }) => {
