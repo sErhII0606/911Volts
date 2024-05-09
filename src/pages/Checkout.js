@@ -212,14 +212,6 @@ const Checkout = () => {
                       total: total,
                     })
                   );
-                  cart.map((cartItem) => {
-                    dispatcher(
-                      updateAmount({
-                        productId: cartItem.product.productId,
-                        amount: cartItem.product.amount - cartItem.quantity,
-                      })
-                    );
-                  });
                 }}
               >
                 Place the order

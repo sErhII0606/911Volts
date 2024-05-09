@@ -105,9 +105,24 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
-        const { user } = payload;
-        state.isMember = true;
+        const user = {
+          AccessToken: payload.AuthenticationResult.AccessToken,
+          IdToken: payload.AuthenticationResult.IdToken,
+          userName: payload.family_name + " " + payload.given_name,
+          userId: payload.sub,
+          phoneNumber: payload.phone_number,
+          address: payload.address,
+          company: payload.Company,
+          email: payload.Value,
+          userOrderHistory: [],
+          /*  userId: payload.UserAttributes.filter(
+            (attribute) => attribute.Name === "sub"
+          )[0].Value, */
+        };
         state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(state.user);
+        state.isMember = true;
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
         state.isLoading = false;
