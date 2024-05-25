@@ -39,6 +39,7 @@ function App() {
           <Route path="login" element={<Login></Login>} />
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="guest_order/:orderId" element={<Order />} />
           <Route
             path="user"
             element={
@@ -49,7 +50,7 @@ function App() {
           >
             <Route index element={<UserDashboard />} />
             <Route path="order_history" element={<OrderHistory />} />
-            <Route path="order" element={<Order />} />
+            <Route path="order_history/:orderId" element={<Order />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Route>

@@ -8,6 +8,7 @@ import ProductPlaceholder from "../../components/Products_Page/ProductPlaceholde
 import ProductPlaceholderHorizontal from "../../components/Products_Page/ProductPlaceholderHorizontal";
 import PagePagination from "../../components/Products_Page/PagePagination";
 import useDeviceSize from "../../utils/useDeviceSize";
+import { setIsOrderCreated } from "../../features/cart/cartSlice";
 
 const SingleCategory = () => {
   const { products, isLoading, page, productsPerPage } = useSelector(
@@ -19,6 +20,8 @@ const SingleCategory = () => {
 
   React.useEffect(() => {
     dispatch(searchByCategory({ category, name: "" }));
+
+    dispatch(setIsOrderCreated(false));
   }, [category]);
   const [width, height] = useDeviceSize();
   if (isLoading) {

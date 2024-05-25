@@ -3,13 +3,13 @@ import SingleItemOrderComponent from "./SingleItemOrderComponent";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useDispatch } from "react-redux";
-import { getUserOrder } from "../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { orderStatus } from "../../utils/orderStatus";
 
 const SingleOrder = ({ order }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const orderStatus = (paid, shipped, delivered) => {
+  /*   const orderStatus = (paid, shipped, delivered) => {
     if (!paid && !shipped) {
       return "awaiting payment";
     }
@@ -22,17 +22,15 @@ const SingleOrder = ({ order }) => {
     if (delivered) {
       return "delivered";
     }
-  };
+  }; */
   return (
     <div>
       <Card name={order.orderId}>
         <Card.Header>{`Ordered: ${order.date}`}</Card.Header>
         <Card.Body>
-          <Card.Title>{`Order status: ${orderStatus(
-            order.paid,
-            order.shipped,
-            order.delivered
-          )}. Total: $${Math.trunc(order.total)}.`}</Card.Title>
+          <Card.Title>{`Order status: ${
+            orderStatus(order.paid, order.shipped, order.delivered).status
+          }. Total: $${Math.trunc(order.total)}.`}</Card.Title>
           <div className="single-order-container">
             {" "}
             {order.items.map((item, index) => {
@@ -48,10 +46,9 @@ const SingleOrder = ({ order }) => {
                   e.target.offsetParent.attributes.name.value
                 );
 
-                dispatch(
-                  getUserOrder(e.target.offsetParent.attributes.name.value)
+                navigate(
+                  `/user/order_history/${e.target.offsetParent.attributes.name.value}`
                 );
-                navigate("/user/order");
               }}
             >
               View Details

@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const SearchForm = ({
   name,
@@ -11,6 +13,7 @@ const SearchForm = ({
   inputPlaceholder,
   buttonVariant,
   buttonPlaceholder,
+  buttonDisabled,
 }) => {
   return (
     <Form
@@ -20,16 +23,22 @@ const SearchForm = ({
         handleClick();
       }}
     >
-      <input
-        type={name}
-        placeholder={inputPlaceholder}
-        className={inputClassName}
-        value={value}
-        onChange={handleChange}
-      />
-      <Button variant={buttonVariant} onClick={handleClick}>
-        {buttonPlaceholder}
-      </Button>
+      <InputGroup>
+        <Form.Control
+          type={name}
+          placeholder={inputPlaceholder}
+          className={inputClassName}
+          value={value}
+          onChange={handleChange}
+        />
+        <Button
+          variant={buttonVariant}
+          onClick={handleClick}
+          disabled={buttonDisabled}
+        >
+          {buttonPlaceholder}
+        </Button>
+      </InputGroup>
     </Form>
   );
 };

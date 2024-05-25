@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Wrapper from "../wrappers/Checkout";
-import { createOrder } from "../features/cart/cartSlice";
+import { createOrder, setIsOrderCreated } from "../features/cart/cartSlice";
 
 import { priceStringToNumber } from "../utils/priceTransformer";
 import FormRow from "../components/FormRow";
@@ -13,12 +13,36 @@ import LoginModal from "../components/Checkout/LoginModal";
 import CartComponent from "../components/Checkout/CartComponent";
 const Checkout = () => {
   const dispatcher = useDispatch();
-  const { cart, total } = useSelector((store) => store.cart);
-  const { user, isOrderLoading } = useSelector((store) => store.user);
+
+  useEffect(() => {
+    dispatcher(setIsOrderCreated(false));
+  }, []);
+  const { cart, total, isOrderLoading, createdOrder, isOrderCreated } =
+    useSelector((store) => store.cart);
+  const { user, isGuest } = useSelector((store) => store.user);
+
+  const {
+    address,
+    company,
+    phoneNumber,
+    FirstName,
+    LastName,
+    AccessToken,
+    email,
+  } = user
+    ? user
+    : {
+        phoneNumber: "",
+        FirstName: "",
+        LastName: "",
+        email: "",
+        address: "",
+        company: "",
+      };
   const initialInfo = {
-    name: "",
-    email: "",
-    phoneNumber: "",
+    name: FirstName + " " + LastName,
+    email: email,
+    phoneNumber: phoneNumber,
     address: "",
     city: "",
     state: "",
@@ -30,6 +54,12 @@ const Checkout = () => {
     const value = e.target.value;
     setValues({ ...values, [name]: value });
   };
+
+  if (isOrderCreated) {
+    return (
+      <h3>{`${createdOrder.id}: please copy your order Id for future references`}</h3>
+    );
+  }
   if (cart.length === 0) {
     return (
       <>
@@ -40,7 +70,7 @@ const Checkout = () => {
       </>
     );
   }
-  if (!user) {
+  if (!isGuest && !user) {
     return <LoginModal />;
   }
   return (
@@ -179,7 +209,7 @@ const Checkout = () => {
               </label> */}
               <button
                 className="btn"
-                disabled={isOrderLoading ? true : false}
+                disabled={isOrderLoading}
                 onClick={(e) => {
                   e.preventDefault();
                   if (
@@ -198,9 +228,62 @@ const Checkout = () => {
                     createOrder({
                       id: Date.now().toString(),
                       date: new Date().toDateString(),
-                      userId: user.userId,
+                      userId: isGuest ? "guest" : user.userId,
                       items: cart,
-
+                      htmlEmail: ` <div>
+                          <h4>
+                            Order from
+                            <span style={ fontFamily: "cursive" }>
+                              ${new Date().toDateString()}
+                            </span>
+                          </h4>
+                          <h5>Name: ${values.name}</h5>
+                          <h5>Email: ${values.email}</h5>
+                          <h5>Phone number: ${values.phoneNumber}</h5>
+                          <h5>
+                          Delivery address:
+                          <span style={ fontFamily: "cursive" }>
+                           ${
+                             values.address +
+                             "," +
+                             values.city +
+                             "," +
+                             values.state +
+                             "," +
+                             values.zip
+                           }
+                            .
+                          </span>
+                        </h5>
+                          <h5>
+                            Total:
+                            <span style={ fontFamily: "cursive" }>
+                              
+                              $${Math.trunc(total)}.
+                            </span>
+                          </h5>
+                         
+                          <div>
+                            <h4>Items:</h4>
+                           ${cart.map((item, i) => {
+                             return ` <div className="item" key={i}>
+                                  <h5>
+                                   ${i + 1}.
+                                    <span style={ fontFamily: "cursive" }>
+                                   <a href=http://localhost:3000/products/${
+                                     item.product.productId
+                                   }>${item.product.name}</a>, (Quantity:${
+                               item.quantity
+                             })
+                                    </span>
+                                  </h5>
+                                </div>`;
+                           })}
+                          </div>
+                        </div>`, // <img
+                      // style={{ height: "7px" }}
+                      //  src=${item.product.img[0].imgLink} add small size img to product properties
+                      // />
                       address:
                         values.address +
                         "," +
@@ -209,7 +292,7 @@ const Checkout = () => {
                         values.state +
                         "," +
                         values.zip,
-                      total: total,
+                      isTaxExam: false,
                     })
                   );
                 }}

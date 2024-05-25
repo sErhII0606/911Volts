@@ -1,12 +1,17 @@
 import Accordion from "react-bootstrap/Accordion";
 import SidebarCard from "./SidebarCard";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { categories } from "../../data";
 import { handleClose } from "../../features/sidebar/sidebarSlice";
 import CartComponent from "../Checkout/CartComponent";
+import SearchForm from "../Navbar/SearchForm";
+import { setSearchOrder } from "../../features/search/searchSlice";
 
 const SidebarBody = () => {
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.user);
+  const { searchOrder } = useSelector((store) => store.search);
   const dispatcher = useDispatch();
   const handleClickClose = () => dispatcher(handleClose());
   return (
@@ -41,6 +46,33 @@ const SidebarBody = () => {
         products={true}
         handleClick={handleClickClose}
       />
+      {!user && (
+        <SidebarCard
+          eventKey="6"
+          title="Find Your Order"
+          order={true}
+          body={
+            <SearchForm
+              name="search"
+              value={searchOrder}
+              inputClassName="me-2"
+              formClassName="d-flex"
+              handleClick={() => {
+                navigate(`/guest_order/${searchOrder}`);
+                dispatcher(setSearchOrder(""));
+                handleClickClose();
+              }}
+              handleChange={(e) => {
+                dispatcher(setSearchOrder(e.target.value));
+              }}
+              inputPlaceholder="Search"
+              buttonVariant="outline-success"
+              buttonPlaceholder="Search"
+            />
+          }
+          /*  handleClick={handleClickClose} */
+        />
+      )}
       <SidebarCard
         eventKey="2"
         title="Cart"

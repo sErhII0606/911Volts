@@ -11,9 +11,10 @@ import {
 } from "../../features/singleProduct/singleProductSlice";
 const StarPointsContainer = ({ product }) => {
   const dispatch = useDispatch();
-  const { stars, point, starView, average } = useSelector(
+  const { stars, point, isStarsLoading } = useSelector(
     (state) => state.product
   );
+  const { average } = product;
   const { user } = useSelector((state) => state.user);
   const handleMouseEnter = (star) => {
     if (!star) {
@@ -29,6 +30,9 @@ const StarPointsContainer = ({ product }) => {
     dispatch(setPoint(Math.trunc(+average)));
   };
   const handleClick = (point) => {
+    if (isStarsLoading) {
+      return;
+    }
     if (!point) {
       return;
     }
@@ -50,11 +54,12 @@ const StarPointsContainer = ({ product }) => {
     } */
 
     dispatch(setStarView(point));
-    let starViewArray = product.starView
-      ? [starViewObj, ...product.starView]
-      : [starViewObj];
     dispatch(
-      postStarView({ productId: product.productId, starView: starViewArray })
+      postStarView({
+        productId: product.productId,
+        userId: user.userId,
+        stars: point,
+      })
     );
   };
   useEffect(() => {

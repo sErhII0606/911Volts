@@ -13,6 +13,7 @@ import {
   calculateTotal,
   increase,
   decrease,
+  setIsOrderCreated,
 } from "../features/cart/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -24,6 +25,7 @@ const Cart = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatcher(calculateTotal());
+    dispatcher(setIsOrderCreated(false));
   }, [cart]);
   if (cart.length === 0) {
     return (

@@ -12,14 +12,16 @@ import ProductPlaceholder from "../../components/Products_Page/ProductPlaceholde
 import PagePagination from "../../components/Products_Page/PagePagination";
 import useDeviceSize from "../../utils/useDeviceSize";
 import ProductPlaceholderHorizontal from "../../components/Products_Page/ProductPlaceholderHorizontal";
+import { setIsOrderCreated } from "../../features/cart/cartSlice";
 const Products = () => {
   const { products, isLoading, numOfPages, page, productsPerPage } =
     useSelector((store) => store.allProducts);
-  const { search } = useSelector((store) => store.search);
+  const { searchProduct } = useSelector((store) => store.search);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllProducts(search));
-  }, [search]);
+    dispatch(getAllProducts(searchProduct));
+    dispatch(setIsOrderCreated(false));
+  }, [searchProduct]);
 
   const [width, height] = useDeviceSize();
   //console.log(width, height);

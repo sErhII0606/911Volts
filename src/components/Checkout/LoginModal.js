@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { loginUser } from "../../features/user/userSlice";
+import { loginUser, setIsGuest } from "../../features/user/userSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 import FormRow from "../FormRow";
@@ -41,7 +41,14 @@ const LoginModal = () => {
         </div>
         <div>
           <p> Not a member yet, Please signup</p>
-          <p>Continue as guest</p>
+          <button
+            type="button"
+            onClick={() => {
+              dispatcher(setIsGuest(true));
+            }}
+          >
+            Continue as guest
+          </button>
         </div>
       </Modal.Body>
       <Modal.Footer>

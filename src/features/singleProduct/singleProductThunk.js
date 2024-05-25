@@ -19,11 +19,14 @@ export const postReviewThunk = async ({ productId, reviews }, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data);
   }
 };
-export const postStarViewThunk = async ({ productId, starView }, thunkAPI) => {
+export const postStarViewThunk = async (
+  { productId, userId, stars },
+  thunkAPI
+) => {
   try {
     const resp = await customFetch.put(
       `/products/${productId}/starView`,
-      { starView },
+      { userId, stars },
       {
         headers: {
           ...header(),

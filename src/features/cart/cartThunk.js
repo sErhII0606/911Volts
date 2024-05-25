@@ -11,7 +11,6 @@ export const createOrderThunk = async (order, thunkAPI) => {
     const resp = await customFetch.post(`orders`, order, {
       headers: {
         ...header(),
-        Authorization: thunkAPI.getState().user.user.IdToken,
       },
     });
 

@@ -12,7 +12,7 @@ import {
   searchByCategory,
   resetNumberOfPages,
 } from "../../features/AllProducts/allProductsSlice";
-import { setSearch } from "../../features/search/searchSlice";
+import { setSearchProduct } from "../../features/search/searchSlice";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
@@ -30,8 +30,9 @@ import BigNavbar from "./BigNavbar";
 import useDeviceSize from "../../utils/useDeviceSize";
 import { limit } from "../../data";
 const NavbarN = () => {
-  const { search } = useSelector((store) => store.search);
-  const { user } = useSelector((store) => store.user);
+  const { searchProduct } = useSelector((store) => store.search);
+  const { user, isLoading } = useSelector((store) => store.user);
+  const { isProductsLoading } = useSelector((store) => store.allProducts);
   const navigate = useNavigate();
   const dispatcher = useDispatch();
   const { cart, total } = useSelector((store) => store.cart);
@@ -43,13 +44,15 @@ const NavbarN = () => {
       dispatcher(
         searchByCategory({
           category: arr[arr.length - 1],
-          name: search,
+          name: searchProduct,
         })
       );
-      dispatcher(setSearch(""));
+      dispatcher(setSearchProduct(""));
     } else {
       navigate("/products");
-      dispatcher(getAllProducts(search));
+      dispatcher(getAllProducts(searchProduct));
+
+      // dispatcher(setSearchProduct(""));
     }
   };
   useEffect(() => {
@@ -101,8 +104,11 @@ const NavbarN = () => {
                     {user ? (
                       <SlLogout
                         className="icon user-icon"
+                        disabled
                         onClick={() => {
-                          dispatcher(logout("bye"));
+                          dispatcher(
+                            logout({ AccessToken: user.AccessToken, isLoading })
+                          );
                         }}
                       />
                     ) : (
@@ -119,16 +125,17 @@ const NavbarN = () => {
               <div className="search">
                 <SearchForm
                   name="search"
-                  value={search}
+                  value={searchProduct}
                   inputClassName="me-2"
                   formClassName="d-flex"
                   handleClick={handleSearch}
                   handleChange={(e) => {
-                    dispatcher(setSearch(e.target.value));
+                    dispatcher(setSearchProduct(e.target.value));
                   }}
                   inputPlaceholder="Search"
                   buttonVariant="outline-success"
                   buttonPlaceholder="Search"
+                  buttonDisabled={isProductsLoading}
                 />
               </div>
             </>
@@ -136,7 +143,7 @@ const NavbarN = () => {
         </Container>
       </Navbar>
 
-      {user && <UserNavbar user={user} />}
+      {user && <UserNavbar user={user} isLoading={isLoading} />}
     </Wrapper>
   );
 };

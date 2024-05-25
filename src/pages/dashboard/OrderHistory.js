@@ -5,20 +5,31 @@ import { Spinner } from "react-bootstrap";
 import SingleItemOrderComponent from "../../components/OrderHistory/SingleItemOrderComponent";
 import SingleOrder from "../../components/OrderHistory/SingleOrder";
 import Wrapper from "../../wrappers/OrderHistory";
+import { setIsOrderCreated } from "../../features/cart/cartSlice";
+import OrderHistoryPagination from "../../components/OrderHistory/OrderHistoryPagination";
 const OrderHistory = () => {
-  const { user, isOrderHistoryLoading } = useSelector((store) => store.user);
+  const {
+    user,
+    isOrderHistoryLoading,
+    numOfOrdersShown,
+    isOrderHistoryLoadingPagination,
+    count,
+  } = useSelector((store) => store.user);
   const { userOrderHistory } = user;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
-      getUserOrderHistory({ userId: user.userId, createdAt: "1710123768649" })
+      getUserOrderHistory({
+        userId: user.userId,
+      }) //, createdAt: "1710123768649"
     );
+
+    dispatch(setIsOrderCreated(false));
   }, []);
-  const arr = [...userOrderHistory];
   if (isOrderHistoryLoading) {
     return <Spinner />;
   }
-  if (!userOrderHistory[0]) {
+  if (count === 0) {
     return (
       <Wrapper>
         <h2>No Orders Yet!</h2>
@@ -28,11 +39,21 @@ const OrderHistory = () => {
   return (
     <Wrapper>
       <div>
-        {arr
-          .sort((a, b) => b.createdAt - a.createdAt)
-          .map((order, i) => {
-            return <SingleOrder order={order} key={i} />;
-          })}
+        {userOrderHistory.map((order, i) => {
+          return <SingleOrder order={order} key={i} />;
+        })}
+      </div>
+      <div>
+        {isOrderHistoryLoadingPagination ? (
+          <Spinner />
+        ) : (
+          <OrderHistoryPagination
+            isOrderHistoryLoadingPagination={isOrderHistoryLoadingPagination}
+            userId={user.userId}
+            firstIndex={numOfOrdersShown}
+            count={count}
+          />
+        )}
       </div>
     </Wrapper>
   );

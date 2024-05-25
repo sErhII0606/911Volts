@@ -15,6 +15,7 @@ const SidebarCard = ({
   handleClick,
   products,
   isUser,
+  order,
 }) => {
   return (
     <Card>
@@ -28,6 +29,7 @@ const SidebarCard = ({
           home={home}
           products={products}
           isUser={isUser}
+          order={order}
         >
           <span onClick={handleClick}>{title}</span>
         </CustomToggle>

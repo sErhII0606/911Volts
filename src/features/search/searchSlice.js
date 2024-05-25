@@ -1,19 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  search: "",
+  searchProduct: "",
+  searchOrder: "",
 };
 
 const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setSearch: (state, { payload }) => {
-      state.search = payload;
+    setSearchProduct: (state, { payload }) => {
+      state.searchProduct = payload;
+    },
+    setSearchOrder: (state, { payload }) => {
+      state.searchOrder = payload;
     },
   },
 });
 
-export const { setSearch } = searchSlice.actions;
+export const { setSearchProduct, setSearchOrder } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -7,6 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { getAllProducts } from "../../features/AllProducts/allProductsSlice";
 import useDeviceSize from "../../utils/useDeviceSize";
 import SliderComponent from "../../components/Categories/SliderComponent";
+import { setIsOrderCreated } from "../../features/cart/cartSlice";
 
 const MainCategories = () => {
   const { isLoading } = useSelector((store) => store.allProducts);
@@ -15,6 +16,7 @@ const MainCategories = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts(""));
+    dispatch(setIsOrderCreated(false));
   }, []);
   if (isLoading) {
     return (

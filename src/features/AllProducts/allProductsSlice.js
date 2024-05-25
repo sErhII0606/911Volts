@@ -14,7 +14,7 @@ const initialFiltersState = {
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
 };
 const initialState = {
-  isLoading: false,
+  isProductsLoading: false,
   products: [],
   names: [],
   brands: [],
@@ -61,10 +61,9 @@ const allProductsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
-        state.isLoading = true;
+        state.isProductsLoading = true;
       })
       .addCase(getAllProducts.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
         state.products = payload.Items;
         state.categories = Array.from(
           new Set(payload.Items.map((product) => product.category))
@@ -82,23 +81,24 @@ const allProductsSlice = createSlice({
         state.page = 1;
         state.numOfPages = Math.ceil(payload.Count / state.productsPerPage);
         state.totalProducts = payload.Count;
+        state.isProductsLoading = false;
       })
       .addCase(getAllProducts.rejected, (state, { payload }) => {
-        state.isLoading = false;
         toast.error(payload.message);
+        state.isProductsLoading = false;
       })
       .addCase(searchByCategory.pending, (state) => {
-        state.isLoading = true;
+        state.isProductsLoading = true;
       })
       .addCase(searchByCategory.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
         state.page = 1;
         state.products = payload.Items;
         state.numOfPages = Math.ceil(payload.Count / state.productsPerPage);
         state.totalProducts = payload.Count;
+        state.isProductsLoading = false;
       })
       .addCase(searchByCategory.rejected, (state, { payload }) => {
-        state.isLoading = false;
+        state.isProductsLoading = false;
         toast.error(payload.message);
       });
   },

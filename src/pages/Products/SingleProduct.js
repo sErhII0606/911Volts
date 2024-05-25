@@ -8,12 +8,14 @@ import ProductInfo from "../../components/Single_Product_Page/ProductInfo";
 import Wrapper from "../../wrappers/SingleProduct";
 import ReviewForm from "../../components/Single_Product_Page/ReviewForm";
 import Reviews from "../../components/Single_Product_Page/Reviews";
+import { setIsOrderCreated } from "../../features/cart/cartSlice";
 const SingleProduct = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
 
   React.useEffect(() => {
     dispatch(getProduct(productId));
+    dispatch(setIsOrderCreated(false));
   }, []);
   const { product, isLoading, isReviewLoading } = useSelector(
     (store) => store.product

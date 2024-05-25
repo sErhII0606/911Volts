@@ -13,14 +13,14 @@ const Wrapper = styled.section`
   }
 `;
 
-const UserNavbar = ({ user }) => {
+const UserNavbar = ({ user, isLoading }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <Wrapper>
       <Nav variant="tabs" defaultActiveKey="/" className="user-navbar">
         <NavDropdown
-          title={`hi, ${user.userName}`}
+          title={`hi, ${user.FirstName} ${user.LastName[0]}.`}
           id="collapsible-nav-dropdown"
         >
           <NavDropdown.Item
@@ -32,7 +32,11 @@ const UserNavbar = ({ user }) => {
           </NavDropdown.Item>
           <NavDropdown.Item>Contact us</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item onClick={() => dispatch(logout())}>
+          <NavDropdown.Item
+            onClick={() =>
+              dispatch(logout({ AccessToken: user.AccessToken, isLoading }))
+            }
+          >
             logout
           </NavDropdown.Item>
         </NavDropdown>

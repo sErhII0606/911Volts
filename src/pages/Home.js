@@ -1,9 +1,15 @@
+import { useEffect } from "react";
 import Wrapper from "../wrappers/Home";
 import About from "./About";
 import MainCategories from "./Categories/MainCategories";
 import Products from "./Products/Products";
-
+import { setIsOrderCreated } from "../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 const Home = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setIsOrderCreated(false));
+  }, []);
   return (
     <Wrapper>
       <main>

@@ -5,7 +5,7 @@ import {
   getAllProducts,
   searchByCategory,
 } from "../../features/AllProducts/allProductsSlice";
-import { setSearch } from "../../features/search/searchSlice";
+import { setSearchProduct } from "../../features/search/searchSlice";
 import { categories } from "../../data";
 import { useNavigate } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -17,7 +17,8 @@ import SearchForm from "../Navbar/SearchForm";
 import useDeviceSize from "../../utils/useDeviceSize";
 const Sidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
-  const { search } = useSelector((store) => store.search);
+  const { searchProduct } = useSelector((store) => store.search);
+  const { isProductsLoading } = useSelector((store) => store.allProducts);
   const navigate = useNavigate();
   const dispatcher = useDispatch();
   const [width, height] = useDeviceSize();
@@ -28,13 +29,13 @@ const Sidebar = () => {
       dispatcher(
         searchByCategory({
           category: arr[arr.length - 1],
-          name: search,
+          name: searchProduct,
         })
       );
-      dispatcher(setSearch(""));
+      dispatcher(setSearchProduct(""));
     } else {
       navigate("/products");
-      dispatcher(getAllProducts(search));
+      dispatcher(getAllProducts(searchProduct));
     }
   };
   return (
@@ -59,16 +60,17 @@ const Sidebar = () => {
             <div className="search">
               <SearchForm
                 name="search"
-                value={search}
+                value={searchProduct}
                 inputClassName="me-2"
                 formClassName="d-flex"
                 handleClick={handleSearch}
                 handleChange={(e) => {
-                  dispatcher(setSearch(e.target.value));
+                  dispatcher(setSearchProduct(e.target.value));
                 }}
                 inputPlaceholder="Search"
                 buttonVariant="outline-success"
                 buttonPlaceholder="Search"
+                buttonDisabled={isProductsLoading}
               />
             </div>
           )}

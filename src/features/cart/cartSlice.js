@@ -11,6 +11,7 @@ import { createOrderThunk } from "./cartThunk";
 
 const initialState = {
   isOrderLoading: false,
+  isOrderCreated: false,
   cart: getCartFromLocalStorage() ? getCartFromLocalStorage() : [],
   total: 0,
 };
@@ -43,6 +44,9 @@ const cartSlice = createSlice({
           payload.product.img[0].imgLink
         )
       );
+    },
+    setIsOrderCreated: (state, { payload }) => {
+      state.isOrderCreated = payload;
     },
     removeItemFromCart: (state, { payload }) => {
       state.cart = state.cart.filter(
@@ -136,6 +140,8 @@ const cartSlice = createSlice({
         toast.success("Your order is created");
         state.cart = [];
         removeCartFromLocalStorage();
+        state.createdOrder = payload;
+        state.isOrderCreated = true;
         state.isOrderLoading = false;
       })
       .addCase(createOrder.rejected, (state, { payload }) => {
@@ -152,5 +158,6 @@ export const {
   calculateTotal,
   increase,
   decrease,
+  setIsOrderCreated,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -12,7 +12,7 @@ import StarPointsContainer from "./StarPointsContainer";
 import ImageContainer from "./ImageContainer";
 const ProductInfo = ({ product }) => {
   const { cart } = useSelector((store) => store.cart);
-  const { average } = useSelector((store) => store.product);
+  const { average } = product;
   const dispatcher = useDispatch();
   let quantity = 1;
   return (

@@ -13,9 +13,8 @@ const initialState = {
   isStarsLoading: false,
   stars: [1, 2, 3, 4, 5],
   point: 0,
-  average: 0,
 
-  product: [{ imgShown: 0, reviews: [], starView: [] }],
+  product: { imgShown: 0, reviews: [], average: 0, starView: [] },
 };
 
 export const getProduct = createAsyncThunk(
@@ -62,16 +61,17 @@ const singleProductSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getProduct.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
+        state.product = payload;
+        state.product.imgShown = 0;
 
-        [state.product] = payload.Items;
-        let sum = 0;
+        // state.average = payload.average; //(sum / payload.starView.length).toFixed(1);
+        /*  let sum = 0;
         payload.Items[0].starView?.map((star) => {
           sum = sum + star.stars;
         });
-        state.product.imgShown = 0;
-        state.average = (sum / payload.Items[0].starView?.length).toFixed(1);
+        state.average = (sum / payload.Items[0].starView?.length).toFixed(1); */
         //state.point = Math.trunc(+(sum / payload.Items[0].starView?.length));
+        state.isLoading = false;
         // [state.starAverage]=payload.Items.starView.map
       })
       .addCase(getProduct.rejected, (state, { payload }) => {
@@ -82,11 +82,11 @@ const singleProductSlice = createSlice({
         state.isReviewLoading = true;
       })
       .addCase(postReview.fulfilled, (state, { payload }) => {
-        state.isReviewLoading = false;
-        state.product.reviews = payload.reviews;
+        state.product.reviews = payload.updatedReview;
         toast.success(
-          `Thanks ${payload.reviews[0].reviewName} for the review:)`
+          `Thanks ${payload.newReview.reviewName} for the review:)`
         );
+        state.isReviewLoading = false;
       })
       .addCase(postReview.rejected, (state, { payload }) => {
         state.isReviewLoading = false;
@@ -96,17 +96,17 @@ const singleProductSlice = createSlice({
         state.isStarsLoading = true;
       })
       .addCase(postStarView.fulfilled, (state, { payload }) => {
-        state.isStarsLoading = false;
-        let sum = 0;
+        /*    let sum = 0;
         payload.starView.map((star) => {
           sum = sum + star.stars;
-        });
-        state.average = (sum / payload.starView.length).toFixed(1);
+        }); */
+        state.product.average = payload.average; //(sum / payload.starView.length).toFixed(1);
         state.product.starView = payload.starView;
+        state.isStarsLoading = false;
       })
       .addCase(postStarView.rejected, (state, { payload }) => {
-        state.isStarsLoading = false;
         toast.error(`Something went wrong...${payload}`);
+        state.isStarsLoading = false;
       })
       .addCase(updateAmount.pending, (state) => {
         state.isAmountLoading = true;

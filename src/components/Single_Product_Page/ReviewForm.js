@@ -24,7 +24,7 @@ function ReviewForm({ product }) {
     reviewId: Date.now(),
     reviewUserExperience: "",
     reviewEmail: user?.email,
-    reviewName: user?.userName || "",
+    reviewName: user?.FirstName + " " + user?.LastName || "",
     reviewCompany: user?.company || "",
     reviewReview: "",
     author: user,
@@ -52,13 +52,9 @@ function ReviewForm({ product }) {
       toast.warn("Please fill all requested fields");
       return;
     }
-    let reviewsArray = product.reviews
-      ? [review, ...product.reviews]
-      : [review];
+
     setReview(reviewInitial);
-    dispatch(
-      postReview({ productId: product.productId, reviews: reviewsArray })
-    );
+    dispatch(postReview({ productId: product.productId, reviews: review }));
     e.target.form.reset();
     setHappyVariant("outline-success");
     setNeutralVariant("outline-warning");
